@@ -1,6 +1,5 @@
 package primitives;
 
-import primitives.Double3;
 
 public class Point {
     protected Double3 xyz;

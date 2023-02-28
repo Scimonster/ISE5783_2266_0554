@@ -1,8 +1,5 @@
 package primitives;
 
-import primitives.Double3;
-import primitives.Point;
-
 public class Vector extends Point {
 
     Vector(Double3 point) throws IllegalArgumentException
