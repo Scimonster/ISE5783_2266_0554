@@ -1,6 +1,6 @@
-package test.primitives;
+package primitives;
 
-import test.primitives.Double3;
+import primitives.Double3;
 
 public class Point {
     protected Double3 xyz;
@@ -27,12 +27,25 @@ public class Point {
     public double distanceSqaured(Point other)
     {
          Double3 delta=this.xyz.subtract(other.xyz);
-         return delta.d1*delta.d1+delta.d2*delta.d2+delta.d3*delta.d3;
+         return delta.d1*delta.d1 + delta.d2*delta.d2 + delta.d3*delta.d3;
     }
 
     public double distance(Point other)
     {
         return Math.sqrt(this.distanceSqaured(other));
+    }
+
+    public String toString() {
+        return "Point: " + this.xyz.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof Point)) return false;
+        Point other = (Point)obj;
+        return this.xyz.equals(other.xyz);
     }
 
 }

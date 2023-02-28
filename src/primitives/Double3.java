@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.primitives;
+package primitives;
 
 import static primitives.Util.isZero;
 
