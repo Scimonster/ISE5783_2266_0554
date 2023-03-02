@@ -1,7 +1,15 @@
 package primitives;
 
+/**
+ * class of a vector, inherits from point. Start at origin and end at the point
+ */
 public class Vector extends Point {
 
+    /**
+     *
+     * @param point of Double3 a tuple of Doubles
+     * @throws IllegalArgumentException
+     */
     Vector(Double3 point) throws IllegalArgumentException
     {
         super(point);
