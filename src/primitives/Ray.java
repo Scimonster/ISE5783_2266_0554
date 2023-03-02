@@ -1,9 +1,17 @@
 package primitives;
 
+/**
+ * An infinite ray beginning from a point, in a given vector's direction
+ */
 public class Ray {
     Point p0;
     Vector dir;
 
+    /**
+     * Create a ray from point in the direction of vector
+     * @param point ray head
+     * @param vector ray direction
+     */
     public Ray(Point point, Vector vector)
     {
         this.p0=point;

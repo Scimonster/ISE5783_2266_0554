@@ -1,13 +1,14 @@
 package primitives;
 
 /**
- * class of a vector, inherits from point. Start at origin and end at the point
+ * Class of a vector, inherits from point.
+ * Vectors start at the origin and end at the point.
  */
 public class Vector extends Point {
 
     /**
-     *
-     * @param point of Double3 a tuple of Doubles
+     * Internal constructor for a triplet of doubles
+     * @param point triplet of doubles
      * @throws IllegalArgumentException
      */
     Vector(Double3 point) throws IllegalArgumentException
