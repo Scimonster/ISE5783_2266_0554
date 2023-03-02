@@ -27,7 +27,7 @@ public class Vector extends Point {
      * @param z z coordinate
      */
     public Vector(double x, double y, double z) {
-        this(new Double3(x,y,z));
+        super(x,y,z);
     }
 
     /**

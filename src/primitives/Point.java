@@ -19,7 +19,7 @@ public class Point {
      */
     public Point(double x, double y, double z)
     {
-        this(new Double3(x,y,z));
+        this.xyz=new Double3(x,y,z);
     }
 
     /**
