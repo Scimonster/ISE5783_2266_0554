@@ -7,8 +7,8 @@ import primitives.Vector;
  * We represent the plane using point-normal form.
  */
 public class Plane extends Geometry{
-    Point point;
-    Vector normal;
+    private Point point;
+    private Vector normal;
 
     /**
      * Create a plane from three (non-colinear) points
@@ -45,7 +45,7 @@ public class Plane extends Geometry{
      */
     public Vector getNormal()
     {
-        return normal;
+        return null;
     }
 
     /**

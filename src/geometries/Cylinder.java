@@ -1,0 +1,33 @@
+package geometries;
+import primitives.Point;
+import primitives.Vector;
+import primitives.Ray;
+
+public class Cylinder extends Tube {
+
+    private double height;
+
+    /**
+     * constructs a tube
+     * @param radius double for radius
+     * @param ray Ray for axisRay
+     * @param height double for height
+     */
+    public Cylinder(double radius, Ray ray, double height)
+    {
+        super(radius, ray);
+        if (height<=0)
+            throw new IllegalArgumentException(("Height cannot be less than 0"));
+        this.height=height;
+    }
+
+    public double getHeight()
+    {
+        return this.height;
+    }
+
+    @Override
+    public Vector getNormal(Point point) {
+        return super.getNormal(point);
+    }
+}
