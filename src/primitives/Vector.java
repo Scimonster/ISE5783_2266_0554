@@ -9,7 +9,7 @@ public class Vector extends Point {
     /**
      * Internal constructor for a triplet of doubles
      * @param point triplet of doubles
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if vector is zero vector
      */
     Vector(Double3 point) throws IllegalArgumentException
     {
@@ -21,14 +21,20 @@ public class Vector extends Point {
     }
 
     /**
-     * Create a vector from triplet of points
-     * @param x x coordinate
-     * @param y y coordinate
-     * @param z z coordinate
+     * creates a vector
+     * @param x double
+     * @param y double
+     * @param z double
+     * @throws IllegalArgumentException if zero vector is created
      */
-    public Vector(double x, double y, double z) {
-        super(x,y,z);
-    }
+     public Vector(double x, double y, double z) throws IllegalArgumentException
+     {
+         super(x,y,z);
+         if (this.xyz==Double3.ZERO)
+             throw new IllegalArgumentException("cannot create zero vector");
+     }
+
+
 
     /**
      * Add two vectors
