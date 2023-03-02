@@ -3,6 +3,9 @@ import primitives.Point;
 
 import java.util.List;
 
+/**
+ * class of triangle, contains 3 points
+ */
 public class Triangle extends Polygon {
     public Triangle(Point p1, Point p2, Point p3)
     {
