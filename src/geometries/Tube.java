@@ -3,7 +3,9 @@ import primitives.Point;
 import primitives.Vector;
 import primitives.Ray;
 
-
+/**
+ * Tube to extend radical geometry (cylinder with unlimited height)
+ */
 public class Tube extends RadialGeometry {
     protected Ray axisRay;
 

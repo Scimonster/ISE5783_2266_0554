@@ -1,7 +1,7 @@
 package primitives;
 
 /**
- * A point in the space
+ * A point in the 3d plane
  */
 public class Point {
     protected Double3 xyz;

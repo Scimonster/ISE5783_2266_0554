@@ -3,6 +3,9 @@ import primitives.Point;
 import primitives.Vector;
 import primitives.Ray;
 
+/**
+ * extends tube, puts a limit on its height
+ */
 public class Cylinder extends Tube {
 
     private double height;
@@ -21,6 +24,10 @@ public class Cylinder extends Tube {
         this.height=height;
     }
 
+    /**
+     * to return the height
+     * @return height
+     */
     public double getHeight()
     {
         return this.height;
