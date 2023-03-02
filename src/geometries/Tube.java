@@ -8,7 +8,7 @@ public class Tube extends RadialGeometry {
     protected Ray axisRay;
 
     /**
-     * consturcts the tube
+     * constructs the tube
      * @param radius double for radius
      * @param ray Ray for center ray
      */
