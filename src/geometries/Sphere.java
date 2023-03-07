@@ -7,17 +7,17 @@ import primitives.Vector;
  */
 public class Sphere extends RadialGeometry{
 
-    private Point Center;
+    private Point center;
 
     /**
      * constructs a sphere with the parameters passed
      * @param radius double for radius
      * @param point Point for center
      */
-    public Sphere(Double radius, Point point)
+    public Sphere(double radius, Point point)
     {
         super(radius);
-        this.Center=point;
+        this.center = point;
     }
 
     /**
@@ -25,7 +25,7 @@ public class Sphere extends RadialGeometry{
      * @return the center of the sphere
      */
     public Point getCenter() {
-        return Center;
+        return center;
     }
 
     @Override
