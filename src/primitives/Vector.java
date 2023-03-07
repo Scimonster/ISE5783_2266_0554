@@ -30,7 +30,7 @@ public class Vector extends Point {
      public Vector(double x, double y, double z) throws IllegalArgumentException
      {
          super(x,y,z);
-         if (this.xyz==Double3.ZERO)
+         if (this.xyz.equals(Double3.ZERO))
              throw new IllegalArgumentException("cannot create zero vector");
      }
 
