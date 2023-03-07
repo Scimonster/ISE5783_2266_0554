@@ -35,13 +35,17 @@ public class Vector extends Point {
      }
 
 
-
     /**
-     * Add two vectors
-     * @param other the vector to add
-     * @return new vector representing sum of this vector and the other
+     *
+     * @param other The point to add
+     * @return a vector that is the sum of the 2 vectors
+     * @throws IllegalArgumentException when the vectors are the same
      */
-    public Vector add(Vector other) {
+    public Vector add(Vector other) throws IllegalArgumentException {
+        if(this.normalize().equals(other.normalize()))
+        {
+            throw new IllegalArgumentException(("ERROR, cannot add a vector by itself"));
+        }
         return new Vector(this.xyz.add(other.xyz));
     }
 
