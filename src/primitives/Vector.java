@@ -42,7 +42,7 @@ public class Vector extends Point {
      * @throws IllegalArgumentException when the vectors are the same
      */
     public Vector add(Vector other) throws IllegalArgumentException {
-        if(this.normalize().equals(other.normalize()))
+        if(this.equals(other))
         {
             throw new IllegalArgumentException(("ERROR, cannot add a vector by itself"));
         }
