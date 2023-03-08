@@ -25,13 +25,10 @@ public class Vector extends Point {
      * @param x double
      * @param y double
      * @param z double
-     * @throws IllegalArgumentException if zero vector is created
      */
-     public Vector(double x, double y, double z) throws IllegalArgumentException
+     public Vector(double x, double y, double z)
      {
-         super(x,y,z);
-         if (this.xyz.equals(Double3.ZERO))
-             throw new IllegalArgumentException("cannot create zero vector");
+         this(new Double3(x,y,z));
      }
 
 
