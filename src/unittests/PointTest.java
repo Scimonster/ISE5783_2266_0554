@@ -62,13 +62,13 @@ class PointTest {
      */
     @Test
     void distanceSquared() {
-        //Equivalence Partition
+        // ============ Equivalence Partitions Tests ==============
         Point p1=new Point(4,4,4);
         Point p2=new Point (1,1,1);
 
         assertEquals(p1.distanceSquared(p2), 27, "Yields unexpected valued");
 
-        //Boundary Value Test
+        // =============== Boundary Values Tests ==================
 
         //Distance squared from origin
        p1= new Point (0,0,0);
@@ -81,14 +81,14 @@ class PointTest {
      */
     @Test
     void distance() {
-        //test distance
+        // ============ Equivalence Partitions Tests ==============
         Point p1=new Point(1,4,0);
         Point p2=new Point (1,0,0);
 
         assertEquals(p1.distance(p2),4 , 0.000001, "Yields unexpected valued");
 
 
-        //Boundary Test
+        // =============== Boundary Values Tests ==================
 
         //Distance from origin
         p1= new Point (0,0,0);
