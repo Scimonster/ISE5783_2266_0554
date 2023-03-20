@@ -20,6 +20,6 @@ class SphereTest {
         Point p2=new Point (1,0,0);
 
         Vector v1=p2.subtract(p1).normalize();
-        assertEquals(s1.getNormal(p1), v1, "Normal not calculated correctly");
+        assertEquals(s1.getNormal(p2), v1, "Normal not calculated correctly");
     }
 }

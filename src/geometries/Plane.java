@@ -18,8 +18,10 @@ public class Plane extends Geometry{
      */
     public Plane(Point p1, Point p2, Point p3)
     {
-        this.point=p1;
-        this.normal=null;
+        this.point = p1;
+        Vector v1 = p1.subtract(p2);
+        Vector v2 = p1.subtract(p3);
+        this.normal = v1.crossProduct(v2).normalize();
     }
 
     /**
@@ -45,7 +47,7 @@ public class Plane extends Geometry{
      */
     public Vector getNormal()
     {
-        return null;
+        return this.normal;
     }
 
     /**
