@@ -28,6 +28,11 @@ public class Sphere extends RadialGeometry{
         return center;
     }
 
+    /**
+     * method to get the normal of a sphere from a specific point on the surface
+     * @param point Point to get the normal based on
+     * @return the normalized normal vector
+     */
     @Override
     public Vector getNormal(Point point)
     {
