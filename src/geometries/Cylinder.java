@@ -34,40 +34,33 @@ public class Cylinder extends Tube {
         return this.height;
     }
 
+    /**
+     * Return the normal to the cylinder in a given point
+     * If it's on one of the bases, return the normal to the base
+     * If it's on the round tube, return the normal to the tube
+     * If it's on the edge, we force it to be on the base
+     * @param point Point on the tube
+     * @return normal vector
+     */
     @Override
     public Vector getNormal(Point point) {
+        Vector v = this.axisRay.getDir();
+        Point p0 = this.axisRay.getP0();
+        Point p1 = this.axisRay.getP0().add(v.scale(this.height));
 
-        //if the point passed is the origin, just return the negative scaled axisRay vector
-        if(point.equals(this.axisRay.getP0()))
+        //if the point passed is on the base of the origin, return the negative scaled axisRay vector
+        if(point.equals(p0) || isZero(point.subtract(p0).dotProduct(v)))
         {
-            return this.axisRay.getDir().scale(-1);
+            return v.scale(-1);
         }
 
-        Vector v1=point.subtract(this.axisRay.getP0());
-
-        //if v1 is orthogonal, we know that point is on the base of the origin
-        if(isZero(v1.dotProduct(this.axisRay.getDir())))
+        //if point is on the opposite base, return the axisRay vector
+        if (p1.equals(point) || isZero(point.subtract(p1).dotProduct(v)))
         {
-            return this.axisRay.getDir().scale(-1);
+            return v;
         }
 
-        Point p1= this.axisRay.getP0().add(this.axisRay.getDir().scale(this.height));
-
-        //if point is equivalent to p1, we just return the vector
-        if (p1.equals(point))
-        {
-            return this.axisRay.getDir();
-        }
-
-        v1=point.subtract(p1);
-
-        //if v1 is orthogonal now, we know it is on the other base
-        if(isZero(v1.dotProduct(this.axisRay.getDir())))
-        {
-            return this.axisRay.getDir();
-        }
-
-        //now we just use the super class
+        // on the tube, just use the super class
         return super.getNormal(point);
     }
 }
