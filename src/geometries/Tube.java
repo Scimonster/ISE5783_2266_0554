@@ -38,11 +38,16 @@ public class Tube extends RadialGeometry {
     public Vector getNormal(Point point)
     {
         Vector v1=point.subtract(this.axisRay.getP0());
+
         double t=this.axisRay.getDir().dotProduct(v1);
+
+        //if t is zero, v1 was already the normal since, it was already orthogonal
         if (isZero(t))
         {
             return v1.normalize();
         }
+
+        //get the point on the axisRay that would produce the normal vector when subtracted from point
         Point O= this.axisRay.getP0().add(this.axisRay.getDir().scale(t));
         return point.subtract(O).normalize();
     }

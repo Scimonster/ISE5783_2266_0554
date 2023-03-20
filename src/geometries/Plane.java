@@ -19,6 +19,7 @@ public class Plane extends Geometry{
     public Plane(Point p1, Point p2, Point p3)
     {
         this.point = p1;
+        //calculation of get normal using the vectors created by the points and crossproduct between them
         Vector v1 = p1.subtract(p2);
         Vector v2 = p1.subtract(p3);
         this.normal = v1.crossProduct(v2).normalize();
