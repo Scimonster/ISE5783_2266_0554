@@ -18,6 +18,18 @@ public class Ray {
         this.dir=vector.normalize();
     }
 
+    /**
+     * Get the origin point of the ray
+     * @return origin point
+     */
+    public Point getP0() {return this.p0;}
+
+    /**
+     * Get the direction vector of the ray
+     * @return direction vector
+     */
+    public Vector getDir() {return this.dir;}
+
     @Override
     public String toString()
     {
