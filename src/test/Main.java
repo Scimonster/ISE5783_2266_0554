@@ -7,7 +7,10 @@ import primitives.Point;
 import primitives.Vector;
 
 /** Test program for the 1st stage
- * @author Dan Zilberstein */
+ * @author Dan Zilberstein
+ * @author Eyal Schachter, 209792266, scimonster1@gmail.com
+ * @author Ariel Blumstein, 330430554, ayb1998@aol.com
+ */
 public final class Main {
    /** Main program to tests initial functionality of the 1st stage
     * @param args irrelevant here */
