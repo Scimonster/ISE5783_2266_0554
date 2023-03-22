@@ -8,7 +8,7 @@ import primitives.Ray;
  */
 public class Cylinder extends Tube {
 
-    private double height;
+    private final double height;
 
     /**
      * constructs a tube

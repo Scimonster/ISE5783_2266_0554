@@ -4,7 +4,7 @@ package geometries;
  * A geometry with a radius
  */
 public abstract class RadialGeometry extends Geometry {
-    protected double radius;
+    final double radius;
 
     /**
      * constructs a radial geometry with the radius passed, fails if the double is less than 0

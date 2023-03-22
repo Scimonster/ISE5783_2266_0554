@@ -4,7 +4,7 @@ package primitives;
  * A point in the 3d plane
  */
 public class Point {
-    Double3 xyz;
+    final Double3 xyz;
 
     Point(Double3 point)
     {

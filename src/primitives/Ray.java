@@ -4,8 +4,8 @@ package primitives;
  * An infinite ray beginning from a point, in a given vector's direction
  */
 public class Ray {
-    private Point p0;
-    private Vector dir;
+    private final Point p0;
+    private final Vector dir;
 
     /**
      * Create a ray from point in the direction of vector

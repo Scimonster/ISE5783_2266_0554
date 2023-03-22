@@ -7,7 +7,7 @@ import primitives.Ray;
  * Tube to extend radial geometry (cylinder with unlimited height)
  */
 public class Tube extends RadialGeometry {
-    protected Ray axisRay;
+    final Ray axisRay;
 
     /**
      * constructs the tube
