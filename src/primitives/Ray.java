@@ -25,7 +25,8 @@ public class Ray {
     public Point getP0() {return this.p0;}
 
     /**
-     * Get the direction vector of the ray
+     * Get the direction vector of the ray.
+     * Direction vector will be normalized.
      * @return direction vector
      */
     public Vector getDir() {return this.dir;}

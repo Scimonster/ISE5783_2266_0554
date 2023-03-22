@@ -12,9 +12,9 @@ public class Plane extends Geometry{
 
     /**
      * Create a plane from three (non-colinear) points
-     * @param p1
-     * @param p2
-     * @param p3
+     * @param p1 point 1
+     * @param p2 point 2
+     * @param p3 point 3
      */
     public Plane(Point p1, Point p2, Point p3)
     {

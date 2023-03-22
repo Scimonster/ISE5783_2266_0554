@@ -21,7 +21,7 @@ public class Sphere extends RadialGeometry{
     }
 
     /**
-     *
+     * Get the sphere's center origin point
      * @return the center of the sphere
      */
     public Point getCenter() {

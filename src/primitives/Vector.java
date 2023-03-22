@@ -22,9 +22,9 @@ public class Vector extends Point {
 
     /**
      * creates a vector
-     * @param x double
-     * @param y double
-     * @param z double
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param z z-coordinate
      */
      public Vector(double x, double y, double z)
      {
@@ -43,7 +43,7 @@ public class Vector extends Point {
     }
 
     /**
-     *
+     * Scale a vector by a scalar
      * @param c scalar
      * @return new vector multiplied by scalar
      */
