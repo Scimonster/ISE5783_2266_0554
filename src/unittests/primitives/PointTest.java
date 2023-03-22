@@ -30,12 +30,12 @@ class PointTest {
         // plus negative vector
         v2 = new Vector(0,-1,-2);
         p3 = new Point(1,1,1);
-        assertEquals(p1.add(v2), p3, "points not equal: plus positive vector");
+        assertEquals(p1.add(v2), p3, "points not equal: plus negative vector");
 
 
         // =============== Boundary Values Tests ==================
 
-        // point plus its negative equivalent vector
+        // point plus its inverse equivalent vector
         Point p4 = new Point(1, 2, 3);
         Vector v5 = new Vector(-1, -2, -3);
         assertEquals(p4.add(v5), new Point(0,0,0), "Point is not the origin");

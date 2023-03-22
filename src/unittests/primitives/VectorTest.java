@@ -5,6 +5,7 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
+import static primitives.Util.checkSign;
 
 /**
  * Unit tests for primitives.Vector class
@@ -138,19 +139,25 @@ class VectorTest {
     @Test
     void dotProduct() {
         // ============ Equivalence Partitions Tests ==============
+
+        //check that dot product works
+        Vector v1 = new Vector (1,1,1);
+        Vector v2 = new Vector (2,2,2);
+        assertEquals(v1.dotProduct(v2), 6, 0.000001, "Dotproduct does not calculate correct dot product");
+
         // positive dot positive
-        Vector v1 = new Vector(1, 2, 3);
-        Vector v2 = new Vector(0, 1, 2);
-        assertTrue(v1.dotProduct(v2) > 0, "positive dot positive should be positive");
+        v1 = new Vector(1, 2, 3);
+        v2 = new Vector(0, 1, 2);
+        assertTrue(checkSign(v1.dotProduct(v2),1), "positive dot positive should be positive");
 
         // positive dot negative
         v2 = new Vector(0,-1,-2);
-        assertTrue(v1.dotProduct(v2) < 0, "positive dot negative should be negative");
-        assertTrue(v2.dotProduct(v1) < 0, "negative dot negative should be negative");
+        assertTrue(checkSign(v1.dotProduct(v2), -1), "positive dot negative should be negative");
+        assertTrue(checkSign(v2.dotProduct(v1),-1), "negative dot positive should be negative");
 
         // negative dot negative
         v1 = new Vector(-1, -1, -1);
-        assertTrue(v1.dotProduct(v2) > 0, "negative dot negative should be positive");
+        assertTrue(checkSign(v1.dotProduct(v2),1), "negative dot negative should be positive");
 
         // =============== Boundary Values Tests ==================
         // vector dot orthogonal
@@ -159,7 +166,7 @@ class VectorTest {
         assertTrue(isZero(v1.dotProduct(v2)), "orthogonal vectors should have dot product 0");
 
         // vector dot itself
-        assertEquals(v1.dotProduct(v1), v1.lengthSquared(), 0.00001, "vector dot product itself should equal the length squared");
+        assertEquals(v1.dotProduct(v1), v1.lengthSquared(), 0.000001, "vector dot product itself should equal the length squared");
     }
 
     /**

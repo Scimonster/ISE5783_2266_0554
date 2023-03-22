@@ -47,17 +47,5 @@ class CylinderTest {
         p1=new Point(2,2,0);
         assertEquals(cur.getNormal(p1),new Vector (1,0,0), "Normal incorrectly calculated");
 
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
