@@ -14,6 +14,7 @@ class SphereTest {
     @Test
     void getNormal() {
         // ============ Equivalence Partitions Tests =======
+        // TC01: point on the sphere
         Point p1= new Point (0,0,0);
         Sphere s1= new Sphere(1,p1);
 

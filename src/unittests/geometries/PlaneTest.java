@@ -16,7 +16,7 @@ class PlaneTest {
     @Test
     void getNormal() {
         // ============ Equivalence Partitions Tests =======
-        // xy plane
+        // TC01: xy plane
         Point p1 = new Point (1,0,0);
         Point p2 = new Point(0,1, 0);
         Point p3 = new Point (1,1,0);
@@ -33,10 +33,10 @@ class PlaneTest {
         Point p1 = new Point (1,0,0);
         Point p2 = new Point(0,1, 0);
         // =============== Boundary Values Tests ==================
-        // first and second points equal
+        // TC01: first and second points equal
         assertThrows(IllegalArgumentException.class, () -> new Plane(p1, p1, p2), "should not create plane with points being equal");
 
-        // all points in a line
+        // TC02: all points in a line
         Point p3 = new Point (1,0,0);
         Point p4 = new Point(2,0, 0);
         Point p5 = new Point(3,0, 0);

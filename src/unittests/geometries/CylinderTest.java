@@ -17,33 +17,33 @@ class CylinderTest {
         Cylinder cur= new Cylinder(2, axis, 2);
 
         // ============ Equivalence Partitions Tests ==============
-        //point on the round surface
+        //TC01: point on the round surface
         Point p1=new Point(1,2,0);
         assertEquals(cur.getNormal(p1), new Vector(0,1,0), "Normal incorrectly calculated");
 
-        //point on surface of origin
+        //TC02: point on surface of origin
         p1=new Point(0,0,1);
         assertEquals(cur.getNormal(p1),new Vector (-1,0,0), "Normal incorrectly calculated");
 
-        //point on surface of opposite origin
+        //TC03: point on surface of opposite origin
         p1=new Point(2,0,1);
         assertEquals(cur.getNormal(p1),new Vector (1,0,0), "Normal incorrectly calculated");
 
 
         // =============== Boundary Values Tests ==================
-        //the point is the origin
+        //TC04: the point is the origin
         p1=new Point(0,0,0);
         assertEquals(cur.getNormal(p1),new Vector (-1,0,0), "Normal incorrectly calculated");
 
-        //the point is opposite the origin
+        //TC05: the point is opposite the origin
         p1=new Point(2,0,0);
         assertEquals(cur.getNormal(p1),new Vector (1,0,0), "Normal incorrectly calculated");
 
-        //point is on the base edge of the origin, we expect the base normal
+        //TC06: point is on the base edge of the origin, we expect the base normal
         p1= new Point(0,2,0);
         assertEquals(cur.getNormal(p1),new Vector (-1,0,0), "Normal incorrectly calculated");
 
-        //point is on the base edge opposite the origin
+        //TC07: point is on the base edge opposite the origin
         p1=new Point(2,2,0);
         assertEquals(cur.getNormal(p1),new Vector (1,0,0), "Normal incorrectly calculated");
 

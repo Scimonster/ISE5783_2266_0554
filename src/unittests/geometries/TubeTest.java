@@ -19,10 +19,12 @@ class TubeTest {
         Tube t1= new Tube(1,r1);
 
         // ============ Equivalence Partitions Tests =======
+        // TC01: point on the tube
         Point p2= new Point (1,1,0);
         assertEquals(t1.getNormal(p2), new Vector(0,1,0), "Normal incorrectly calculated" );
 
         // =============== Boundary Values Tests ==================
+        // TC01: point is tube center
         p2= new Point (0,1, 0);
 
         assertEquals(t1.getNormal(p2), new Vector(0,1,0), "Normal incorrectly calculated");

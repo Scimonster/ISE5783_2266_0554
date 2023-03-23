@@ -23,30 +23,30 @@ class VectorTest {
     @Test
     void add() {
         // ============ Equivalence Partitions Tests ==============
-        // positive plus positive
+        // TC01: positive plus positive
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(0, 1, 2);
         Vector v3 = new Vector(1, 3, 5);
         assertEquals(v1.add(v2), v3, "vectors not equal: positive plus positive");
 
-        // positive plus negative
+        // TC02: positive plus negative
         v2 = new Vector(0,-1,-2);
         v3 = new Vector(1,1,1);
         assertEquals(v1.add(v2), v3, "vectors not equal: positive plus negative");
 
-        // negative plus negative
+        // TC03: negative plus negative
         v1 = new Vector(-1, -1, -1);
         v2 = new Vector(0,-1,-2);
         v3 = new Vector(-1,-2,-3);
         assertEquals(v1.add(v2), v3, "vectors not equal: negative plus negative");
 
         // =============== Boundary Values Tests ==================
-        // vector plus itself
+        // TC04: vector plus itself
         v1 = new Vector(1, 2, 3);
         v2 = new Vector(2, 4, 6);
         assertEquals(v1.add(v1), v2, "vector plus itself not working");
 
-        // vector plus its negative
+        // TC05: vector plus its negative
         final Vector v4 = new Vector(1, 2, 3);
         final Vector v5 = new Vector(-1, -2, -3);
         assertThrows(IllegalArgumentException.class, () -> v4.add(v5), "vector plus its negative should throw");
@@ -58,35 +58,35 @@ class VectorTest {
     @Test
     void subtract() {
         // ============ Equivalence Partitions Tests ==============
-        // positive minus positive
+        // TC01: positive minus positive
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(0, 1, 2);
         Vector v3 = new Vector(1, 3, 5);
         assertEquals(v3.subtract(v2), v1, "vectors not equal: positive minus positive");
 
-        // positive minus negative
+        // TC02: positive minus negative
         v2 = new Vector(0,-1,-2);
         v3 = new Vector(1,1,1);
         assertEquals(v3.subtract(v2), v1, "vectors not equal: positive minus negative");
 
-        // negative minus positive
+        // TC03: negative minus positive
         v1 = new Vector(-1, -1, -1);
         v2 = new Vector(0,1,2);
         v3 = new Vector(-1,-2,-3);
         assertEquals(v1.subtract(v2), v3, "vectors not equal: negative minus positive");
 
-        // negative minus negative
+        // TC04: negative minus negative
         v1 = new Vector(-1, -1, -1);
         v2 = new Vector(0,-1,-2);
         v3 = new Vector(-1,-2,-3);
         assertEquals(v3.subtract(v2), v1, "vectors not equal: negative minus negative");
 
         // =============== Boundary Values Tests ==================
-        // vector minus itself
+        // TC05: vector minus itself
         final Vector v4 = new Vector(1, 2, 3);
         assertThrows(IllegalArgumentException.class, () -> v4.subtract(v4), "vector minus itself should throw");
 
-        // vector minus its negative
+        // TC06: vector minus its negative
         v1 = new Vector(1, 2, 3);
         v2 = new Vector(-1, -2, -3);
         v3 = new Vector(2, 4, 6);
@@ -99,37 +99,37 @@ class VectorTest {
     @Test
     void scale() {
         // ============ Equivalence Partitions Tests ==============
-        // scale positive integer
+        // TC01: scale positive integer
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(2, 4, 6);
         assertEquals(v1.scale(2), v2, "scale by positive int not equal");
 
-        // scale positive float
+        // TC02: scale positive float
         v1 = new Vector(1, 2, 3);
         v2 = new Vector(1.5, 3, 4.5);
         assertEquals(v1.scale(1.5), v2, "scale by positive float not equal");
 
-        // scale negative integer
+        // TC03: scale negative integer
         v1 = new Vector(1, 2, 3);
         v2 = new Vector(-2, -4, -6);
         assertEquals(v1.scale(-2), v2, "scale by negative int not equal");
 
-        // scale negative float
+        // TC04: scale negative float
         v1 = new Vector(1, 2, 3);
         v2 = new Vector(-1.5, -3, -4.5);
         assertEquals(v1.scale(-1.5), v2, "scale by negative float not equal");
 
         // =============== Boundary Values Tests ==================
-        // scale by 1
+        // TC05: scale by 1
         v1 = new Vector(1, 2, 3);
         assertEquals(v1.scale(1), v1, "scale by 1 should give original vector");
 
-        // scale by -1
+        // TC06: scale by -1
         v1 = new Vector(1, 2, 3);
         v2 = new Vector(-1, -2, -3);
         assertEquals(v1.scale(-1), v2, "scale by -1 should give inverse vector");
 
-        // scale by 0
+        // TC07: scale by 0
         assertThrows(IllegalArgumentException.class, () -> (new Vector(1,1,1)).scale(0), "scale by 0 should throw");
     }
 
@@ -140,32 +140,32 @@ class VectorTest {
     void dotProduct() {
         // ============ Equivalence Partitions Tests ==============
 
-        //check that dot product works
+        // TC01: check that dot product works
         Vector v1 = new Vector (1,1,1);
         Vector v2 = new Vector (2,2,2);
         assertEquals(v1.dotProduct(v2), 6, 0.000001, "Dotproduct does not calculate correct dot product");
 
-        // positive dot positive
+        // TC02: positive dot positive
         v1 = new Vector(1, 2, 3);
         v2 = new Vector(0, 1, 2);
         assertTrue(checkSign(v1.dotProduct(v2),1), "positive dot positive should be positive");
 
-        // positive dot negative
+        // TC03: positive dot negative
         v2 = new Vector(0,-1,-2);
         assertTrue(checkSign(v1.dotProduct(v2), -1), "positive dot negative should be negative");
         assertTrue(checkSign(v2.dotProduct(v1),-1), "negative dot positive should be negative");
 
-        // negative dot negative
+        // TC04: negative dot negative
         v1 = new Vector(-1, -1, -1);
         assertTrue(checkSign(v1.dotProduct(v2),1), "negative dot negative should be positive");
 
         // =============== Boundary Values Tests ==================
-        // vector dot orthogonal
+        // TC05: vector dot orthogonal
         v1 = new Vector(1, 2, 3);
         v2 = new Vector(0, 3, -2);
         assertTrue(isZero(v1.dotProduct(v2)), "orthogonal vectors should have dot product 0");
 
-        // vector dot itself
+        // TC06: vector dot itself
         assertEquals(v1.dotProduct(v1), v1.lengthSquared(), 0.000001, "vector dot product itself should equal the length squared");
     }
 
@@ -180,8 +180,7 @@ class VectorTest {
         Vector v2 = new Vector(0, 3, -2);
         Vector vr = v1.crossProduct(v2);
 
-        // TC01: Test that length of cross-product is proper (orthogonal vectors taken
-        // for simplicity)
+        // TC01: Test that length of cross-product is proper (orthogonal vectors taken for simplicity)
         assertEquals( v1.length() * v2.length(), vr.length(), 0.00001,"crossProduct() wrong result length");
 
         // TC02: Test cross-product result orthogonality to its operands
@@ -189,7 +188,7 @@ class VectorTest {
         assertTrue(isZero(vr.dotProduct(v2)),"crossProduct() result is not orthogonal to 2nd operand");
 
         // =============== Boundary Values Tests ==================
-        // TC11: test zero vector from cross-product of co-linear vectors
+        // TC03: test zero vector from cross-product of co-linear vectors
         Vector v3 = new Vector(-2, -4, -6);
         assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(v3), "crossProduct() for parallel vectors does not throw an exception");
     }
@@ -199,6 +198,8 @@ class VectorTest {
      */
     @Test
     void lengthSquared() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: check that lengthSquared works
         Vector v1 = new Vector(1, 2, 3);
         assertTrue(isZero(v1.lengthSquared() - 14), "lengthSquared is wrong value");
     }
@@ -208,6 +209,8 @@ class VectorTest {
      */
     @Test
     void length() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: check that length works
         assertTrue(isZero(new Vector(0, 3, 4).length() - 5), "length is wrong value");
     }
 
@@ -216,10 +219,14 @@ class VectorTest {
      */
     @Test
     void normalize() {
+        // ============ Equivalence Partitions Tests ==============
         Vector v = new Vector(1, 2, 3);
         Vector u = v.normalize();
+        // TC01: check that normalized vector has length 1
         assertTrue(isZero(u.length() - 1), "normalized length should be 1");
+        // TC02: check that normalized vector is parallel to original vector
         assertThrows(IllegalArgumentException.class, ()-> v.crossProduct(u), "Vectors are not parallel");
+        // TC03: check that normalized vector is in the same direction as original vector
         assertTrue(v.dotProduct(u)>0, "Vectors are in opposite directions");
     }
 }
