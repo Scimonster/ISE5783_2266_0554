@@ -42,4 +42,10 @@ class PlaneTest {
         Point p5 = new Point(3,0, 0);
         assertThrows(IllegalArgumentException.class, () -> new Plane(p3, p4, p5), "should not create plane with 3 colinear points");
     }
+
+    @Test
+    void findIntsersections()
+    {
+        fail("not yet implemented");
+    }
 }

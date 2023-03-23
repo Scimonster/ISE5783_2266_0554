@@ -1,5 +1,10 @@
 package geometries;
 
+import primitives.Point;
+import primitives.Ray;
+
+import java.util.List;
+
 /**
  * A geometry with a radius
  */
@@ -27,5 +32,7 @@ public abstract class RadialGeometry extends Geometry {
     {
         return this.radius;
     }
+
+
 
 }

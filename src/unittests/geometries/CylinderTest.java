@@ -14,7 +14,7 @@ class CylinderTest {
     @Test
     void getNormal() {
         Ray axis= new Ray(new Point (0,0 ,0), new Vector(1,0,0));
-        Cylinder cur= new Cylinder(2, axis, 2);
+        Cylinder cur= new Cylinder(2d, axis, 2);
 
         // ============ Equivalence Partitions Tests ==============
         //TC01: point on the round surface
@@ -47,5 +47,11 @@ class CylinderTest {
         p1=new Point(2,2,0);
         assertEquals(cur.getNormal(p1),new Vector (1,0,0), "Normal incorrectly calculated");
 
+    }
+
+    @Test
+    void findIntersections()
+    {
+        fail("not yet implemented");
     }
 }

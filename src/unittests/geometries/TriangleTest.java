@@ -28,4 +28,10 @@ class TriangleTest {
 
         assertThat(cur.getNormal(p1), AnyOf.anyOf(IsEqual.equalTo(v1),IsEqual.equalTo(v2)));
     }
+
+    @Test
+    void findIntsersections()
+    {
+        fail("not yet implemented");
+    }
 }

@@ -16,7 +16,7 @@ class TubeTest {
         Point p1= new Point (0,0,0);
         Vector v1= new Vector (1,0,0);
         Ray r1 =new Ray(p1,v1);
-        Tube t1= new Tube(1,r1);
+        Tube t1= new Tube(1d,r1);
 
         // ============ Equivalence Partitions Tests =======
         // TC01: point on the tube
@@ -29,5 +29,11 @@ class TubeTest {
 
         assertEquals(t1.getNormal(p2), new Vector(0,1,0), "Normal incorrectly calculated");
 
+    }
+
+    @Test
+    void findIntersections()
+    {
+        fail("not yet implemented");
     }
 }
