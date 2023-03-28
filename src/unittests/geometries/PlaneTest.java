@@ -47,7 +47,7 @@ class PlaneTest {
      * Test findIntersections method for {@link geometries.Plane#findIntersections(primitives.Ray)}
      */
     @Test
-    void findIntsersections()
+    void testFindIntersections()
     {
         fail("not yet implemented");
     }

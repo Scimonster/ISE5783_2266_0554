@@ -89,7 +89,7 @@ public class PolygonTests {
     * Test findIntersections method for {@link geometries.Polygon#findIntersections(primitives.Ray)}
     */
    @Test
-   void findIntersections()
+   void testFindIntersections()
    {
       fail("not yet implemented");
    }

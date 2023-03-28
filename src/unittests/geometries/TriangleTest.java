@@ -33,7 +33,7 @@ class TriangleTest {
      * Test findIntersections method for {@link geometries.Triangle#findIntersections(primitives.Ray)}
      */
     @Test
-    void findIntsersections()
+    void testFindIntersections()
     {
         fail("not yet implemented");
     }
