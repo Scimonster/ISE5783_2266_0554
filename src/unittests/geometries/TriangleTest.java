@@ -29,6 +29,9 @@ class TriangleTest {
         assertThat(cur.getNormal(p1), AnyOf.anyOf(IsEqual.equalTo(v1),IsEqual.equalTo(v2)));
     }
 
+    /**
+     * Test findIntersections method for {@link geometries.Triangle#findIntersections(primitives.Ray)}
+     */
     @Test
     void findIntsersections()
     {

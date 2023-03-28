@@ -43,6 +43,9 @@ class PlaneTest {
         assertThrows(IllegalArgumentException.class, () -> new Plane(p3, p4, p5), "should not create plane with 3 colinear points");
     }
 
+    /**
+     * Test findIntersections method for {@link geometries.Plane#findIntersections(primitives.Ray)}
+     */
     @Test
     void findIntsersections()
     {

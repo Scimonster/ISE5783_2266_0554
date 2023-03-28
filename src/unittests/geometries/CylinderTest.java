@@ -12,7 +12,7 @@ class CylinderTest {
      * Test getNormal method for {@link geometries.Cylinder#getNormal(primitives.Point)}
      */
     @Test
-    void getNormal() {
+    void testGetNormal() {
         Ray axis= new Ray(new Point (0,0 ,0), new Vector(1,0,0));
         Cylinder cur= new Cylinder(2d, axis, 2);
 
@@ -49,8 +49,11 @@ class CylinderTest {
 
     }
 
+    /**
+     * Test findIntersections method for {@link geometries.Cylinder#findIntersections(primitives.Ray)}
+     */
     @Test
-    void findIntersections()
+    void testFindIntersections()
     {
         fail("not yet implemented");
     }

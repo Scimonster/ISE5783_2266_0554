@@ -13,7 +13,7 @@ import static primitives.Util.checkSign;
 class VectorTest {
 
     @Test
-    void zeroVector() {
+    void TestZeroVector() {
         assertThrows(IllegalArgumentException.class, () -> new Vector(0, 0, 0), "zero vector was created");
     }
 
@@ -21,7 +21,7 @@ class VectorTest {
      * Test add method for {@link primitives.Vector#add(primitives.Vector)}
      */
     @Test
-    void add() {
+    void testAdd() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: positive plus positive
         Vector v1 = new Vector(1, 2, 3);
@@ -56,7 +56,7 @@ class VectorTest {
      * Test subtract method for primitives.Vector#subtract(primitives.Vector)
      */
     @Test
-    void subtract() {
+    void testSubtract() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: positive minus positive
         Vector v1 = new Vector(1, 2, 3);
@@ -97,7 +97,7 @@ class VectorTest {
      * Test scale method for {@link primitives.Vector#scale(double)}
      */
     @Test
-    void scale() {
+    void testScale() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: scale positive integer
         Vector v1 = new Vector(1, 2, 3);
@@ -137,7 +137,7 @@ class VectorTest {
      * Test dotProduct method for {@link primitives.Vector#dotProduct(primitives.Vector)}
      */
     @Test
-    void dotProduct() {
+    void testDotProduct() {
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: check that dot product works
@@ -173,7 +173,7 @@ class VectorTest {
      * Test crossProduct method for {@link primitives.Vector#crossProduct(primitives.Vector)}
      */
     @Test
-    void crossProduct() {
+    void testCrossProduct() {
         Vector v1 = new Vector(1, 2, 3);
 
         // ============ Equivalence Partitions Tests ==============
@@ -197,7 +197,7 @@ class VectorTest {
      * Test lengthSquared method for {@link primitives.Vector#lengthSquared()}
      */
     @Test
-    void lengthSquared() {
+    void testLengthSquared() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: check that lengthSquared works
         Vector v1 = new Vector(1, 2, 3);
@@ -218,7 +218,7 @@ class VectorTest {
      * Test normalize method for {@link primitives.Vector#normalize()}
      */
     @Test
-    void normalize() {
+    void testNormalize() {
         // ============ Equivalence Partitions Tests ==============
         Vector v = new Vector(1, 2, 3);
         Vector u = v.normalize();
