@@ -1,8 +1,9 @@
 package geometries;
 import primitives.Point;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
-
+import static primitives.Util.*;
 import java.util.List;
 
 /**
@@ -46,6 +47,54 @@ public class Sphere extends RadialGeometry{
     @Override
     public List<Point> findIntersections(Ray ray)
     {
-        return null;
+        double tm, d;
+        if(this.center.equals(ray.getP0()))
+        {
+            tm = 0;
+            d = 0;
+        }
+        else
+        {
+            //get vector that goes through the origin
+            Vector u=this.getCenter().subtract(ray.getP0());
+            //get the length of a side of the right triangle starting at ray origin, and considering vector u as the hypotenuse
+            tm = Util.alignZero(ray.getDir().dotProduct(u));
+            //get length of 3rd side of the right triangle, which is the distance from the origin to the ray
+            d = Util.alignZero(Math.sqrt(u.lengthSquared() - tm*tm));
+        }
+
+
+
+
+
+        //if d is >= the radius of the sphere we have no intersections
+        if(Util.alignZero(d-this.radius)>=0)
+        {
+            return null;
+        }
+
+        //now we can get half the length of the cord of the ray that appears within the sphere
+        double th = Math.sqrt(this.radius*this.radius - d*d);
+
+        //now let us calculate the distances from p0 along the ray that get intersections
+        double t1 = Util.alignZero(tm +th);
+        double t2 = Util.alignZero(tm-th);
+
+        //return the correct points based on the positivity of t1, t2
+        if (t1>0 && t2 >0)
+        {
+            return List.of(ray.getP0().add(ray.getDir().scale(t1)), ray.getP0().add(ray.getDir().scale(t2)));
+        }
+        else if (t1>0 && t2<=0)
+        {
+            return List.of(ray.getP0().add(ray.getDir().scale(t1)));
+        }
+        else
+        {
+          return null;
+        }
+
+
+
     }
 }

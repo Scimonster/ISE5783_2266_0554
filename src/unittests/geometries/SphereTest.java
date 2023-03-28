@@ -102,7 +102,7 @@ class SphereTest {
         // **** Group: Ray's line is tangent to the sphere (all tests 0 points)
 
         // TC19: Ray starts before the tangent point
-        result=sphere.findIntersections(new Ray(new Point(1,-1,0), new Vector(0,1,1)));
+        result=sphere.findIntersections(new Ray(new Point(1,-1,1), new Vector(0,1,1)));
         assertNull(result, "Unexpected result");
         // TC20: Ray starts at the tangent point
         result=sphere.findIntersections(new Ray(new Point(1,0,1), new Vector(0,1,1)));
