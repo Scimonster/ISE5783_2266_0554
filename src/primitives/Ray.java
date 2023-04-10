@@ -52,4 +52,20 @@ public class Ray {
         return this.p0.equals(other.p0)&& this.dir.equals(other.dir);
 
     }
+
+    /**
+     * function that gets a point on the ray
+     * @param t a double to scale the vector
+     * @return point
+     */
+    public Point getPoint(double t)
+    {
+        //if the double passed is 0, just return p0
+        if (Util.isZero(t))
+        {
+            return this.p0;
+        }
+
+        return this.p0.add(this.dir.scale(t));
+    }
 }
