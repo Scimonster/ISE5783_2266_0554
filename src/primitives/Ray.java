@@ -60,18 +60,17 @@ public class Ray {
      */
     public Point getPoint(double t) throws IllegalArgumentException
     {
-        //if the double passed is 0, just return p0
-        if (Util.isZero(t))
-        {
-            return this.p0;
-        }
-
+        double _t=Util.alignZero(t);
         //if the double passed is negative, throw an exception, we cannot go in opposite direction of the current vector
-        if (t<0)
-        {
+        if (_t<0) {
             throw new IllegalArgumentException("ERROR, a ray is unidirectional");
         }
-
-        return this.p0.add(this.dir.scale(t));
+        //if the double passed is 0, just return p0
+        else if (_t==0) {
+            return this.p0;
+        }
+        else {
+            return this.p0.add(this.dir.scale(_t));
+        }
     }
 }
