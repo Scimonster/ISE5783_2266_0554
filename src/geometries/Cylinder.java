@@ -46,7 +46,7 @@ public class Cylinder extends Tube {
     public Vector getNormal(Point point) {
         Vector v = this.axisRay.getDir();
         Point p0 = this.axisRay.getP0();
-        Point p1 = this.axisRay.getP0().add(v.scale(this.height));
+        Point p1 = this.axisRay.getPoint(this.height);
 
         //if the point passed is on the base of the origin, return the negative scaled axisRay vector
         if(point.equals(p0) || isZero(point.subtract(p0).dotProduct(v)))
