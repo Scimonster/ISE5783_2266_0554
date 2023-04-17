@@ -33,9 +33,10 @@ public class Geometries implements Intersectable{
     @Override
     public List<Point> findIntersections(Ray ray)
     {
-         List<Point> preres=null;
-         List<Point> cur=null;
+         // 2 lists, one to hold the current shapes intersections, and one to hold all the intersections
+         List<Point> preres=null, cur=null;
 
+         //iterate through whole this.shapes, invoke findIntersections for each shape
          for (Intersectable shape: this.shapes)
          {
              cur=shape.findIntersections(ray);
@@ -52,12 +53,14 @@ public class Geometries implements Intersectable{
              }
          }
 
+         //if we found no intersections, return null
          if (preres==null)
          {
              return null;
          }
 
 
+         //return an immutable form of all the intersections
          return Collections.unmodifiableList(preres);
 
     }
