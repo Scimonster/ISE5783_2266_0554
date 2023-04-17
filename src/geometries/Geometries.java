@@ -58,8 +58,8 @@ public class Geometries implements Intersectable{
          }
 
 
-         List<Point> res=Collections.unmodifiableList(preres);
-         return res;
+         return Collections.unmodifiableList(preres);
+
     }
 }
 
