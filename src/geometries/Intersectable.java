@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface Intersectable {
 
-
     /**
      * function that finds the points intersected by the ray on a geometry
      * @param ray the ray being shot

@@ -64,6 +64,7 @@ public class Plane extends Geometry{
         return point;
     }
 
+    @Override
     public List<Point> findIntersections(Ray ray)
     {
         if(this.point.equals(ray.getP0()))
