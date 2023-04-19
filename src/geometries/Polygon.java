@@ -2,10 +2,13 @@ package geometries;
 
 import static primitives.Util.isZero;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.platform.commons.function.Try;
 import primitives.Point;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 /** Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
@@ -84,6 +87,58 @@ public class Polygon extends Geometry {
    @Override
    public List<Point> findIntersections(Ray ray)
    {
-      return null;
+      List<Point> res=this.plane.findIntersections(ray);
+
+      if (res==null)
+      {
+         return null;
+      }
+
+      Point p1, p2;
+      Point intersect=res.get(0);
+      List<Vector> crossList= new ArrayList<Vector>(this.vertices.size());
+      Vector v1;
+      Vector v2;
+      Vector v3;
+      double dotProduct;
+      double dotProduct2;
+
+      try
+      {
+         for (int x=0; x<this.vertices.size(); x++)
+         {
+            p1=this.vertices.get(x);
+            p2=this.vertices.get((x+1)%this.vertices.size());
+            v1=p2.subtract(p1);
+            v2=p1.subtract(intersect);
+            v3=v1.crossProduct(v2);
+            crossList.add(v3);
+         }
+
+      }
+      catch (IllegalArgumentException f)
+      {
+         return null;
+      }
+
+      dotProduct=Util.alignZero(crossList.get(0).dotProduct(crossList.get(1)));
+      if (dotProduct==0)
+      {
+         return null;
+      }
+
+      for (int x=1; x<crossList.size(); ++x)
+      {
+         dotProduct2=Util.alignZero(crossList.get(x).dotProduct(crossList.get((x+1)%this.vertices.size())));
+
+         if(!Util.checkSign(dotProduct, dotProduct2))
+         {
+            return null;
+         }
+      }
+
+      return res;
+
+
    }
 }
