@@ -58,15 +58,17 @@ public class Ray {
      * @param t a double to scale the vector
      * @return point
      */
-    public Point getPoint(double t) throws IllegalArgumentException
+    public Point getPoint(double t)
     {
         double _t=Util.alignZero(t);
         //if the double passed is negative, throw an exception, we cannot go in opposite direction of this.dir
+        /*
         if (_t<0) {
             throw new IllegalArgumentException("ERROR, a ray is unidirectional");
         }
+        */
         //if the double passed is 0, just return p0
-        else if (_t==0) {
+        if (_t==0) {
             return this.p0;
         }
         else {
