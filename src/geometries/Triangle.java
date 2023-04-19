@@ -1,6 +1,7 @@
 package geometries;
 import primitives.*;
 
+
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class Triangle extends Polygon {
         return this.vertices;
     }
 
+
     @Override
     public List<Point> findIntersections(Ray ray)
     {
@@ -53,10 +55,8 @@ public class Triangle extends Polygon {
         double  dot1 = Util.alignZero(v.dotProduct(n1)),
                 dot2 = Util.alignZero(v.dotProduct(n2)),
                 dot3 = Util.alignZero(v.dotProduct(n3));
-        if (
-                (dot1 > 0 && dot2 > 0 && dot3 > 0)
-                || (dot1 < 0 && dot2 < 0 && dot3 < 0)
-        ) {
+        if ( Util.checkSign(dot1, dot2)&& Util.checkSign(dot2, dot3))
+        {
             // all the dot products have same sign -- point is inside triangle
             return res;
         }
