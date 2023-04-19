@@ -51,7 +51,7 @@ public class Tube extends RadialGeometry {
         }
 
         //get the point on the axisRay that would produce the normal vector when subtracted from point
-        Point O= this.axisRay.getPoint(t);
+        Point O= this.axisRay.getP0().add(this.axisRay.getDir().scale(t));
         return point.subtract(O).normalize();
     }
 
