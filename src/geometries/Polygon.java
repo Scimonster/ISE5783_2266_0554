@@ -87,6 +87,7 @@ public class Polygon extends Geometry {
    @Override
    public List<Point> findIntersections(Ray ray)
    {
+      //check if it falls in plane of ploygon
       List<Point> res=this.plane.findIntersections(ray);
 
       if (res==null)
@@ -94,6 +95,7 @@ public class Polygon extends Geometry {
          return null;
       }
 
+      //check if all the crossProducts are in same directions
       Point p1, p2;
       Point intersect=res.get(0);
       List<Vector> crossList= new ArrayList<Vector>(this.vertices.size());
@@ -103,8 +105,11 @@ public class Polygon extends Geometry {
       double dotProduct;
       double dotProduct2;
 
+
+      //if 0 vector created, return null
       try
       {
+         //get all the cross products
          for (int x=0; x<this.vertices.size(); x++)
          {
             p1=this.vertices.get(x);
@@ -121,12 +126,14 @@ public class Polygon extends Geometry {
          return null;
       }
 
+      //get the first dot product
       dotProduct=Util.alignZero(crossList.get(0).dotProduct(crossList.get(1)));
       if (dotProduct==0)
       {
          return null;
       }
 
+      //check that all subsequent dot products are the same sign, if they aren't return null
       for (int x=1; x<crossList.size(); ++x)
       {
          dotProduct2=Util.alignZero(crossList.get(x).dotProduct(crossList.get((x+1)%this.vertices.size())));
