@@ -96,7 +96,7 @@ public class PolygonTests {
       Polygon pol = new Polygon(pts);
       // ============ Equivalence Partitions Tests ==============
 
-      //TC01: Ray does not intersect triangle's plane
+      //TC01: Ray does not intersect polygon's plane
       assertNull(pol.findIntersections(new Ray(new Point(0,0,0), new Vector(1, 0, 0))));
 
       //TC02: Ray does not intersect polygon (ray passes by a side of the polygon in plane that polygon is found) (0 points)
@@ -115,10 +115,20 @@ public class PolygonTests {
       // TC05: Intersection is on vertex of polygon (no intersection)
       assertNull(pol.findIntersections(new Ray(new Point(2,2,0), v1)), "should not intersect");
 
+      // Group: first side of polygon
       // TC06: Intersection is on side of polygon (no intersection)
-      assertNull(pol.findIntersections(new Ray(new Point(2,0,0), v1)), "should not intersect");
+      assertNull(pol.findIntersections(new Ray(new Point(0,2,0), v1)), "should not intersect");
 
       // TC07: Intersection is on continuation of side of polygon (no intersection)
+      assertNull(pol.findIntersections(new Ray(new Point(3,2,0), v1)), "should not intersect");
+      // TC08: Intersection is on opposite continuation of side of polygon (no intersection)
+      assertNull(pol.findIntersections(new Ray(new Point(-3,2,0), v1)), "should not intersect");
+
+      // Group: other side of polygon
+      // TC09: Intersection is on side of polygon (no intersection)
+      assertNull(pol.findIntersections(new Ray(new Point(2,0,0), v1)), "should not intersect");
+
+      // TC10: Intersection is on continuation of side of polygon (no intersection)
       assertNull(pol.findIntersections(new Ray(new Point(2,3,0), v1)), "should not intersect");
 
       // Group: octagon
@@ -126,12 +136,12 @@ public class PolygonTests {
               { new Point(2, 1, 1), new Point(2, -1, 1), new Point(1, -2, 1), new Point(-1, -2, 1),
                       new Point(-2, -1, 1), new Point(-2, 1, 1), new Point(-1, 2, 1), new Point(1, 2, 1)};
       Polygon oct = new Polygon(octopts);
-      // TC08: Intersection is inside the polygon, on a line parallel to the first side that passes through a corner
+      // TC11: Intersection is inside the polygon, on a line parallel to the first side that passes through a corner
       result=pol.findIntersections(new Ray(new Point(1, 0, 0), v1));
       assertEquals(1,result.size(), "Returned wrong number of points");
       assertEquals(result, List.of(new Point(1, 0, 1)), "Returned wrong point");
 
-      // TC09: Intersection is outside the polygon, on a line parallel to the first side that passes through two corners
+      // TC12: Intersection is outside the polygon, on a line parallel to the first side that passes through two corners
       assertNull(pol.findIntersections(new Ray(new Point(1,3,0), v1)), "should not intersect");
    }
 }
