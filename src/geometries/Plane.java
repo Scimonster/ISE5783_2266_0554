@@ -67,18 +67,22 @@ public class Plane extends Geometry{
     @Override
     public List<Point> findIntersections(Ray ray)
     {
+        //if the start point of the ray is in the plane
         if(this.point.equals(ray.getP0()))
         {
             // don't include ray start as an intersection
             return null;
         }
 
+        //if the ray is parallel to the plane, no intersection
         double nDotV = this.normal.dotProduct(ray.getDir());
         if (Util.isZero(nDotV))
         {
             return null;
         }
 
+        //take dot product of the normal and the vector made by the point minus the ray origin, if it is greater than 0, use that as a scalar in get point to get the intersection
+        //else there is no intersections
         double t = Util.alignZero(normal.dotProduct(point.subtract(ray.getP0())) / nDotV);
         if (t <= 0) {
             return null;
