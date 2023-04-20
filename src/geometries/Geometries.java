@@ -17,16 +17,16 @@ public class Geometries implements Intersectable{
     {
         this();
 
+        this.add(shapes);
+
+    }
+
+    public void add(Intersectable ... shapes)
+    {
         for(Intersectable shape: shapes)
         {
             this.shapes.add(shape);
         }
-
-    }
-
-    public void add(Intersectable shape)
-    {
-        this.shapes.add(shape);
     }
 
     @Override
