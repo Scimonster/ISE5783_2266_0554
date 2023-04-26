@@ -11,18 +11,18 @@ import renderer.Camera;
 import java.util.List;
 
 public class IntegrationTests {
-    final int NX = 3;
-    final int NY = 3;
-    final int WIDTH = 3;
-    final int HEIGHT = 3;
+    final static int NX = 3;
+    final static int NY = 3;
+    final static int WIDTH = 3;
+    final static int HEIGHT = 3;
 
     private int countIntersections(Camera camera, Intersectable object)
     {
         int count = 0;
         Ray cameraRay;
         List<Point> intersections;
-        for (int i=0; i<WIDTH; i++) {
-            for (int j=0; j<HEIGHT; j++)
+        for (int i=0; i<NX; i++) {
+            for (int j=0; j<NY; j++)
             {
                 // camera ray through the point in the view plane
                 cameraRay = camera.constructRay(NX, NY, j, i);
