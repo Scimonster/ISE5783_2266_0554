@@ -117,7 +117,35 @@ public class Camera {
      */
     public Ray constructRay(int nX, int nY, int j, int i)
     {
-        return null;
+        //image center
+        Point pC=this.location.add(this.vTo.scale(this.distance));
+
+        //get ratio of pixel size
+        double rY=this.height/nY;
+        double rX=this.width/nX;
+
+        //get the pixel coordinate point
+        double yI=-(i-((nY-1.0)/2.0))*rY;
+        double xJ=(j-((nX-1.0)/2.0))*rX;
+        Point pIJ=pC;
+
+        //shifting Pij properly
+        if (!Util.isZero(xJ))
+        {
+            pIJ=pIJ.add(this.vRight.scale(xJ));
+        }
+        if (!Util.isZero(yI))
+        {
+            pIJ=pIJ.add(this.vUp.scale(yI));
+        }
+
+        //the direction vector
+        Vector vIJ=pIJ.subtract(this.location);
+
+        //now that we have the start of the ray and the vector, let us return that built ray
+        return new Ray(this.location, vIJ);
+
+
     }
 
 }
