@@ -37,6 +37,11 @@ public class IntegrationTests {
         return count;
     }
 
+    /**
+     * Integration test for methods
+     * {@link renderer.Camera#constructRay(int, int, int, int)}
+     * {@link geometries.Sphere#findIntersections(Ray)}
+     */
     @Test
     void testCameraSphereIntersections()
     {
@@ -89,6 +94,11 @@ public class IntegrationTests {
         assertEquals(0, countIntersections(camera, sphere), "wrong number of intersections");
     }
 
+    /**
+     * Integration test for methods
+     * {@link renderer.Camera#constructRay(int, int, int, int)}
+     * {@link geometries.Plane#findIntersections(Ray)}
+     */
     @Test
     void testCameraPlaneIntersections()
     {
@@ -124,6 +134,11 @@ public class IntegrationTests {
         assertEquals(6, countIntersections(camera, plane), "wrong number of intersections");
     }
 
+    /**
+     * Integration test for methods
+     * {@link renderer.Camera#constructRay(int, int, int, int)}
+     * {@link geometries.Triangle#findIntersections(Ray)}
+     */
     @Test
     void testCameraTriangleIntersections()
     {
