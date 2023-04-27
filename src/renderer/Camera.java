@@ -144,8 +144,71 @@ public class Camera {
 
         //now that we have the start of the ray and the vector, let us return that built ray
         return new Ray(this.location, vIJ);
+    }
 
+    /**
+     * Pan the camera along one of its axes
+     * @param t amount to move
+     * @param axis axis vector
+     * @return this
+     */
+    private Camera pan(double t, Vector axis)
+    {
+        if (Util.isZero(t))
+        {
+            throw new IllegalArgumentException("Cannot move 0");
+        }
+        this.location = this.location.add(axis.scale(t));
+        return this;
+    }
 
+    /**
+     * Move the camera forwards or backwards (along the z-axis)
+     * @param t amount to move
+     * @return this
+     */
+    public Camera moveZ(double t)
+    {
+        return this.pan(t, this.vTo);
+    }
+
+    /**
+     * Move the camera left or right (along the x-axis)
+     * @param t amount to move
+     * @return this
+     */
+    public Camera moveX(double t)
+    {
+        return this.pan(t, this.vRight);
+    }
+
+    /**
+     * Move the camera up or down (along the y-axis)
+     * @param t amount to move
+     * @return this
+     */
+    public Camera moveY(double t)
+    {
+        return this.pan(t, this.vUp);
+    }
+
+    /**
+     * Rotate a vector using the standard rotation matrix -- representation is based on interpretation
+     * @param v vector to rotate
+     * @param theta angle to rotate
+     * @return rotated vector
+     */
+    private Vector rotateVector(Vector v, double theta)
+    {
+        // rotation matrix
+        Vector  row1 = new Vector(1, 0, 0),
+                row2 = new Vector(0, Math.cos(theta), -Math.sin(theta)),
+                row3 = new Vector(0, Math.sin(theta), Math.cos(theta));
+        return new Vector(
+                v.dotProduct(row1),
+                v.dotProduct(row2),
+                v.dotProduct(row3)
+        );
     }
 
 }
