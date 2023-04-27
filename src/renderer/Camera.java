@@ -47,7 +47,7 @@ public class Camera {
      * getter for vTo vector
      * @return vTo
      */
-    public Vector getvTo()
+    public Vector getVTo()
     {
         return this.vTo;
     }
@@ -56,7 +56,7 @@ public class Camera {
      * getter for vUp vector
      * @return vUp
      */
-    public Vector getvUp()
+    public Vector getVUp()
     {
         return this.vUp;
     }
@@ -65,7 +65,7 @@ public class Camera {
      * getter for vRight vector
      * @return
      */
-    public Vector getvRight() {
+    public Vector getVRight() {
         return this.vRight;
     }
 
