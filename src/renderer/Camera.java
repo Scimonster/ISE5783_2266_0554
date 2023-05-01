@@ -94,7 +94,7 @@ public class Camera {
      * set viewPlane distance from camera
      * @param distance
      * @return the Camera object itself
-     * @throws IllegalArgumentException if the distance is <=0
+     * @throws IllegalArgumentException if the distance is less than or equal to 0
      */
     public Camera setVPDistance(double distance)
     {

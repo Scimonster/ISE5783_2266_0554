@@ -5,16 +5,17 @@ import primitives.Color;
 import renderer.ImageWriter;
 
 /**
- * Test ImageWriter
+ * Test {@link ImageWriter}
  */
 public class ImageWriterTest {
-    /**
-     * Build a 10x16 grid at resolution 500x800
-     */
     static final int NX = 800;
     static final int NY = 500;
     static final int WIDTH = 16;
     static final int HEIGHT = 10;
+
+    /**
+     * Build a basic 10x16 grid at resolution 500x800
+     */
     @Test
     public void testImageWriter()
     {
