@@ -125,6 +125,14 @@ public class XMLParser {
         return new Point(values.get(0), values.get(1), values.get(2));
     }
 
+    /**
+     * method that parses the file stored in file name
+     * @return a Scene object
+     * @throws IOException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws UnsupportedOperationException
+     */
     public Scene parse() throws IOException, ParserConfigurationException, SAXException, UnsupportedOperationException {
         Scene scene=null;
         //get a xml parsing object
