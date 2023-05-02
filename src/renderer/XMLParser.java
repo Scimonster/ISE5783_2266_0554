@@ -41,7 +41,7 @@ public class XMLParser {
      * @param cur
      * @return a geometries object
      */
-    private Geometries parseGeometries(Element cur) throws UnsupportedEncodingException {
+    private Geometries parseGeometries(Element cur) throws UnsupportedOperationException {
         //Initialize an empty geometries
         Geometries geometries=new Geometries();
         NodeList shapes=cur.getChildNodes();
@@ -50,8 +50,7 @@ public class XMLParser {
         for (int i=0; i< shapes.getLength(); ++i) {
             Node node = shapes.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-                //depending on the tagname, init different geometries, put into geometries
+                //depending on the tagname, init different geometries, put into geometries collection
                 Element element = (Element) node;
                 if (element.getTagName().equals("sphere"))
                 {
@@ -96,7 +95,7 @@ public class XMLParser {
                 }
                 else
                 {
-                    throw new UnsupportedEncodingException("Unexpected encoding");
+                    throw new UnsupportedOperationException("Unexpected tag: " + element.getTagName());
                 }
             }
         }
@@ -126,7 +125,7 @@ public class XMLParser {
         return new Point(values.get(0), values.get(1), values.get(2));
     }
 
-    public Scene parse() throws IOException, ParserConfigurationException, SAXException, UnsupportedEncodingException {
+    public Scene parse() throws IOException, ParserConfigurationException, SAXException, UnsupportedOperationException {
         Scene scene=null;
         //get a xml parsing object
         DocumentBuilderFactory dBfactory = DocumentBuilderFactory.newInstance();
@@ -140,7 +139,7 @@ public class XMLParser {
 
         //if the root is not what we expect, throw an exception
         if(!root.getNodeName().equals("scene"))
-            throw new UnsupportedEncodingException("Not the proper file to build a scene");
+            throw new UnsupportedOperationException("Not the proper file to build a scene");
 
         //make a new scene with the name of the file
         scene = new Scene(this.filename);
@@ -148,31 +147,26 @@ public class XMLParser {
         //set background color
         scene.setBackground(this.makeColor(root.getAttribute("background-color")));
 
-        //iterate through the children node
+        //iterate through the children nodes, init proper fields of scene
         NodeList children = root.getChildNodes();
-
         for (int i=0; i< children.getLength(); ++i)
         {
-            //iterate through the file, init proper fields of scene
             Node node = children.item(i);
             //we only care about element nodes
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-
                 Element element = (Element) node;
 
-                //handle ambientlight tag
-                if (element.getTagName().equals("ambient-light"))
+                //handle ambient-light tag
+                if (element.getTagName().equals("ambient-light")) {
                     scene.setAmbientLight(makeColor(element.getAttribute("color")), Double3.ONE);
-
+                }
                 //handle geometries tag
                 else if (element.getTagName().equals("geometries")) {
-
                     //call helper function
                     scene.addGeometries(parseGeometries(element));
-
                 }
                 else {
-                    throw new UnsupportedEncodingException("Unexpected encoding");
+                    throw new UnsupportedOperationException("Unexpected tag: " + element.getTagName());
                 }
             }
         }
