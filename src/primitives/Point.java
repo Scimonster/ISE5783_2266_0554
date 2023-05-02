@@ -4,6 +4,8 @@ package primitives;
  * A point in the 3d plane
  */
 public class Point {
+    public static final Point ZERO = new Point(0, 0, 0);
+
     final Double3 xyz;
 
     Point(Double3 point)

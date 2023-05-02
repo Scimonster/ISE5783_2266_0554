@@ -1,11 +1,16 @@
 package renderer;
 import primitives.*;
 
+import java.util.MissingResourceException;
+
 public class Camera {
     private Point location;
     private Vector vTo, vUp, vRight;
 
     private double width, height, distance;
+
+    private ImageWriter iw;
+    private RayTracerBase rayTracer;
 
     /**
      * construct the camera, by passing its location point and 2 vectors, that must be orthogonal
@@ -108,6 +113,26 @@ public class Camera {
     }
 
     /**
+     * Set the ray tracer that the camera uses
+     * @param rayTracer
+     * @return Camera for method chaining
+     */
+    public Camera setRayTracer(RayTracerBase rayTracer) {
+        this.rayTracer = rayTracer;
+        return this;
+    }
+
+    /**
+     * Set up the image writer to save the file
+     * @param iw ImageWriter instance
+     * @return Camera for method chaining
+     */
+    public Camera setImageWriter(ImageWriter iw) {
+        this.iw = iw;
+        return this;
+    }
+
+    /**
      * method to construct ray through pixel in viewPlane
      * @param nX number of columns
      * @param nY number of rows
@@ -144,6 +169,54 @@ public class Camera {
 
         //now that we have the start of the ray and the vector, let us return that built ray
         return new Ray(this.location, vIJ);
+    }
+
+    /**
+     * Render the camera image (to memory buffer)
+     *
+     * Calls ray tracing for all pixels
+     * @throws {MissingResourceException} if any properties are unset
+     */
+    public void renderImage()
+    {
+        if (this.location == null)
+            throw new MissingResourceException("missing location", "Point", "location");
+        if (this.rayTracer == null)
+            throw new MissingResourceException("missing rayTracer", "RayTracerBase", "rayTracer");
+        if (this.iw == null)
+            throw new MissingResourceException("missing imageWriter", "ImageWriter", "iw");
+
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    /**
+     * Print a grid on the image
+     * @param interval grid pixel size
+     * @param color grid line color
+     */
+    public void printGrid(int interval, Color color)
+    {
+        if (this.iw == null)
+            throw new MissingResourceException("missing imageWriter", "ImageWriter", "iw");
+
+        // loop over all x, y values, print the grid lines
+        for (int j = 0; j < iw.getNx(); j++) {
+            for (int i = 0; i < iw.getNy(); i++) {
+                if (j % interval == 0 || i % interval == 0) { // grid line
+                    iw.writePixel(j, i, color);
+                }
+            }
+        }
+    }
+
+    /**
+     * Write the generated image to file
+     */
+    public void writeToImage() {
+        if (this.iw == null)
+            throw new MissingResourceException("missing imageWriter", "ImageWriter", "iw");
+
+        iw.writeToImage();
     }
 
     /**
