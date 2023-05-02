@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * An infinite ray beginning from a point, in a given vector's direction
  */
@@ -72,5 +74,45 @@ public class Ray {
         else {
             return this.p0.add(this.dir.scale(_t));
         }
+    }
+
+    /**
+     * method to find the closest point on the ray to p0
+     * @param points list of Point
+     * @return
+     */
+    public Point findClosestPoint(List<Point> points)
+    {
+        //null list or empty list
+       if (points==null||points.size()==0)
+       {
+           return null;
+       }
+
+       double distance = Double.POSITIVE_INFINITY;
+       double cur;
+       Point close=null;
+
+       for (Point point : points)
+       {
+           if (point==null)
+               continue;
+
+           //check if we have the same point as p0
+           if (this.p0.equals(point))
+               return point;
+
+           cur=this.p0.distance(point);
+
+           if (cur<distance)
+           {
+               distance=cur;
+               close=point;
+           }
+
+       }
+
+       return close;
+
     }
 }
