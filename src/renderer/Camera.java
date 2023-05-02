@@ -134,10 +134,10 @@ public class Camera {
 
     /**
      * method to construct ray through pixel in viewPlane
-     * @param nX number of columns
-     * @param nY number of rows
-     * @param j column index
-     * @param i row index
+     * @param nX number of columns (in px resolution)
+     * @param nY number of rows (in px resolution)
+     * @param j column index (in px resolution)
+     * @param i row index (in px resolution)
      * @return the ray constructed
      */
     public Ray constructRay(int nX, int nY, int j, int i)
@@ -186,7 +186,17 @@ public class Camera {
         if (this.iw == null)
             throw new MissingResourceException("missing imageWriter", "ImageWriter", "iw");
 
-        throw new UnsupportedOperationException("Not yet implemented");
+        Ray cameraRay;
+        Color pixelColor;
+
+        // loop over all x, y values, print the grid lines
+        for (int j = 0; j < iw.getNx(); j++) {
+            for (int i = 0; i < iw.getNy(); i++) {
+                cameraRay = this.constructRay(iw.getNx(), iw.getNy(), j, i);
+                pixelColor = this.rayTracer.traceRay(cameraRay);
+                this.iw.writePixel(j, i, pixelColor);
+            }
+        }
     }
 
     /**
