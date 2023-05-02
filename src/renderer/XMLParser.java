@@ -41,8 +41,7 @@ public class XMLParser {
      * @param cur
      * @return a geometries object
      */
-    private Geometries parseGeometries(Element cur)
-    {
+    private Geometries parseGeometries(Element cur) throws UnsupportedEncodingException {
         //Initialize an empty geometries
         Geometries geometries=new Geometries();
         NodeList shapes=cur.getChildNodes();
@@ -94,6 +93,10 @@ public class XMLParser {
                 else if (element.getTagName().equals("geometries"))
                 {
                     geometries.add(parseGeometries(element));
+                }
+                else
+                {
+                    throw new UnsupportedEncodingException("Unexpected encoding");
                 }
             }
         }
@@ -167,7 +170,9 @@ public class XMLParser {
                     //call helper function
                     scene.addGeometries(parseGeometries(element));
 
-
+                }
+                else {
+                    throw new UnsupportedEncodingException("Unexpected encoding");
                 }
             }
         }
