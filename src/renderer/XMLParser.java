@@ -36,31 +36,69 @@ public class XMLParser {
         return List.of(Double.parseDouble(list[0]),Double.parseDouble(list[1]),Double.parseDouble(list[2]));
     }
 
+    /**
+     * parse a geometry tag and initiate a geometries object
+     * @param cur
+     * @return a geometries object
+     */
     private Geometries parseGeometries(Element cur)
     {
+        //Initialize an empty geometries
         Geometries geometries=new Geometries();
         NodeList shapes=cur.getChildNodes();
 
+        //parse the current element
         for (int i=0; i< shapes.getLength(); ++i) {
             Node node = shapes.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
 
+                //depending on the tagname, init different geometries, put into geometries
                 Element element = (Element) node;
-                if (element.getTagName().equals("sphere")){
+                if (element.getTagName().equals("sphere"))
+                {
+                    geometries.add(new Sphere(
+                            makePoint(element.getAttribute("center")),
+                            Double.parseDouble(element.getAttribute("radius"))
+                    ));
+                }
+                else if (element.getTagName().equals("triangle"))
+                {
+                    geometries.add(new Triangle(
+                            makePoint(element.getAttribute("p0")),
+                            makePoint(element.getAttribute("p1")),
+                            makePoint(element.getAttribute("p2"))
+                    ));
 
-                } else if (element.getTagName().equals("triangle")) {
+                }
+                else if (element.getTagName().equals("plane"))
+                {
+                    geometries.add(new Plane(
+                            makePoint(element.getAttribute("p0")),
+                            makePoint(element.getAttribute("p1")),
+                            makePoint(element.getAttribute("p2"))
+                    ));
 
-                } else if (element.getTagName().equals("plane")) {
-
-                }else if(element.getTagName().equals("polygon"))
+                }
+                else if(element.getTagName().equals("polygon"))
                 {
 
                 }
+                else if(element.getTagName().equals("tube"))
+                {
 
+                }
+                else if(element.getTagName().equals("cylinder"))
+                {
 
-
+                }
+                else if (element.getTagName().equals("geometries"))
+                {
+                    geometries.add(parseGeometries(element));
+                }
             }
         }
+
+        return geometries;
     }
 
     /**
@@ -87,6 +125,7 @@ public class XMLParser {
 
     public Scene parse() throws IOException, ParserConfigurationException, SAXException, UnsupportedEncodingException {
         Scene scene=null;
+        //get a xml parsing object
         DocumentBuilderFactory dBfactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = dBfactory.newDocumentBuilder();
 
@@ -96,39 +135,44 @@ public class XMLParser {
 
         Element root = document.getDocumentElement();
 
+        //if the root is not what we expect, throw an exception
         if(!root.getNodeName().equals("scene"))
             throw new UnsupportedEncodingException("Not the proper file to build a scene");
 
+        //make a new scene with the name of the file
         scene = new Scene(this.filename);
 
+        //set background color
         scene.setBackground(this.makeColor(root.getAttribute("background-color")));
 
+        //iterate through the children node
         NodeList children = root.getChildNodes();
 
         for (int i=0; i< children.getLength(); ++i)
         {
+            //iterate through the file, init proper fields of scene
             Node node = children.item(i);
+            //we only care about element nodes
             if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                 Element element = (Element) node;
+
+                //handle ambientlight tag
                 if (element.getTagName().equals("ambient-light"))
                     scene.setAmbientLight(makeColor(element.getAttribute("color")), Double3.ONE);
 
+                //handle geometries tag
+                else if (element.getTagName().equals("geometries")) {
 
-                if (element.getTagName().equals("geometries")) {
+                    //call helper function
+                    scene.addGeometries(parseGeometries(element));
 
 
                 }
-
             }
         }
 
-
-
-
-
-
+        return scene;
     }
-
 
 }

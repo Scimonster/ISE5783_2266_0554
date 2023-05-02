@@ -1,6 +1,8 @@
 package unittests.renderer;
 
+
 import static java.awt.Color.YELLOW;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -81,7 +83,16 @@ public class RenderTests {
    /** Test for XML based scene - for bonus */
    @Test
    public void basicRenderXml() {
-      Scene  scene  = new Scene("XML Test scene");
+      Scene  scene=null;
+      XMLParser doc = new XMLParser( "basicRenderTestTwoColors.xml");
+      try {
+         scene  = doc.parse();
+      }
+      catch (Exception e)
+      {
+         System.out.print(e.getMessage());
+         fail("exception occurred during parse");
+      }
       // enter XML file name and parse from XML file into scene object
       // using the code you added in appropriate packages
       // ...
