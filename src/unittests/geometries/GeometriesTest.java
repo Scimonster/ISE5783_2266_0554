@@ -15,7 +15,7 @@ class GeometriesTest {
                 geo= new Geometries(
                         new Plane(new Point (0,0,1), v1),
                         new Triangle(new Point(0,0,2), new Point(0,5,2), new Point (5,0,2)),
-                        new Sphere(2d, new Point(0,0,2))
+                        new Sphere(new Point(0,0,2), 2d)
                         );
 
         // ============ Equivalence Partitions Tests ==============

@@ -54,7 +54,7 @@ public class IntegrationTests {
                 new Vector(0, 0, -1),
                 new Vector(0, 1, 0)
         ).setVPSize(WIDTH, HEIGHT).setVPDistance(1);
-        sphere = new Sphere(1, new Point(0, 0, -3));
+        sphere = new Sphere(new Point(0, 0, -3), 1);
         assertEquals(2, countIntersections(camera, sphere), "wrong number of intersections");
 
         // TC02: sphere r=2.5, 18 intersections
@@ -63,7 +63,7 @@ public class IntegrationTests {
                 new Vector(0, 0, -1),
                 new Vector(0, 1, 0)
         ).setVPSize(WIDTH, HEIGHT).setVPDistance(1);
-        sphere = new Sphere(2.5, new Point(0, 0, -2.5));
+        sphere = new Sphere(new Point(0, 0, -2.5), 2.5);
         assertEquals(18, countIntersections(camera, sphere), "wrong number of intersections");
 
         // TC03: sphere r=2, 10 intersections
@@ -72,7 +72,7 @@ public class IntegrationTests {
                 new Vector(0, 0, -1),
                 new Vector(0, 1, 0)
         ).setVPSize(WIDTH, HEIGHT).setVPDistance(1);
-        sphere = new Sphere(2, new Point(0, 0, -2));
+        sphere = new Sphere(new Point(0, 0, -2), 2);
         assertEquals(10, countIntersections(camera, sphere), "wrong number of intersections");
 
         // TC04: sphere r=4, 9 intersections (sphere encompasses viewplane)
@@ -81,7 +81,7 @@ public class IntegrationTests {
                 new Vector(0, 0, -1),
                 new Vector(0, 1, 0)
         ).setVPSize(WIDTH, HEIGHT).setVPDistance(1);
-        sphere = new Sphere(4, new Point(0, 0, 0.5));
+        sphere = new Sphere(new Point(0, 0, 0.5), 4);
         assertEquals(9, countIntersections(camera, sphere), "wrong number of intersections");
 
         // TC05: sphere r=0.5, 0 intersections (behind camera)
@@ -90,7 +90,7 @@ public class IntegrationTests {
                 new Vector(0, 0, -1),
                 new Vector(0, 1, 0)
         ).setVPSize(WIDTH, HEIGHT).setVPDistance(1);
-        sphere = new Sphere(0.5, new Point(0, 0, 1));
+        sphere = new Sphere(new Point(0, 0, 1), 0.5);
         assertEquals(0, countIntersections(camera, sphere), "wrong number of intersections");
     }
 

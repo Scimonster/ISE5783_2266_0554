@@ -3,7 +3,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
-import static primitives.Util.*;
+
 import java.util.List;
 
 /**
@@ -15,10 +15,11 @@ public class Sphere extends RadialGeometry{
 
     /**
      * constructs a sphere with the parameters passed
+     *
+     * @param point  Point for center
      * @param radius double for radius
-     * @param point Point for center
      */
-    public Sphere(double radius, Point point)
+    public Sphere(Point point, double radius)
     {
         super(radius);
         this.center = point;

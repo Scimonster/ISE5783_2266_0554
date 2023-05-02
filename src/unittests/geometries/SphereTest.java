@@ -18,7 +18,7 @@ class SphereTest {
         // ============ Equivalence Partitions Tests =======
         // TC01: point on the sphere
         Point p1= new Point (0,0,0);
-        Sphere s1= new Sphere(1d,p1);
+        Sphere s1= new Sphere(p1, 1d);
 
         Point p2=new Point (1,0,0);
 
@@ -32,7 +32,7 @@ class SphereTest {
     @Test
     void testFindIntersections()
     {
-        Sphere sphere = new Sphere(1d, new Point (1, 0, 0));
+        Sphere sphere = new Sphere(new Point (1, 0, 0), 1d);
         // ============ Equivalence Partitions Tests ==============
         // TC01: Ray's line is outside the sphere (0 points)
         assertNull(sphere.findIntersections(new Ray(new Point(-1, 0, 0), new Vector(1, 1, 0))),

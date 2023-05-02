@@ -1,7 +1,7 @@
 package scene;
 
 
-import elements.AmbientLight;
+import lighting.AmbientLight;
 import geometries.Geometries;
 import geometries.Intersectable;
 import primitives.Color;
@@ -32,9 +32,14 @@ public class Scene {
         this.background=back;
         return this;
     }
-    public Scene setAmbient(Color iA, Double3 kA)
+    public Scene setAmbientLight(Color iA, Double3 kA)
     {
-        this.ambient=new AmbientLight(iA, kA);
+        return this.setAmbientLight(new AmbientLight(iA, kA));
+    }
+
+    public Scene setAmbientLight(AmbientLight ambient)
+    {
+        this.ambient=ambient;
         return this;
     }
 
