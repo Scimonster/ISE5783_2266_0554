@@ -212,7 +212,7 @@ public class Camera {
         // loop over all x, y values, print the grid lines
         for (int j = 0; j < iw.getNx(); j++) {
             for (int i = 0; i < iw.getNy(); i++) {
-                if (j % interval == 0 || i % interval == 0) { // grid line
+                if (j % interval == 0 || i % interval == 0 || j == iw.getNx()-1 ||  i == iw.getNy()-1 ) { // grid line
                     iw.writePixel(j, i, color);
                 }
             }
