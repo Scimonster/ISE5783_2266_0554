@@ -7,6 +7,7 @@ import scene.Scene;
 
 import javax.xml.parsers.*;
 import java.io.*;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -79,7 +80,22 @@ public class XMLParser {
                 }
                 else if(element.getTagName().equals("polygon"))
                 {
+                    //get all the attributes for this attribute
+                    NamedNodeMap points=element.getAttributes();
 
+                    List<Point> poly=new LinkedList<>();
+
+                    //extract each point
+                    for (int j=0; j< points.getLength(); ++j)
+                    {
+                        Node point = points.item(j);
+
+                        //add to list of points
+                        poly.add(makePoint(point.getTextContent()));
+                    }
+
+                    //add the polygon
+                    geometries.add(new Polygon(poly.toArray(new Point[0])));
                 }
                 else if(element.getTagName().equals("tube"))
                 {
