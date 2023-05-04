@@ -141,6 +141,18 @@ public class XMLParser {
         return new Point(values.get(0), values.get(1), values.get(2));
     }
 
+
+    /**
+     * method that returns a double 3 based on a string
+     * @param string
+     * @return Double3
+     */
+    private Double3 makeDouble3(String string)
+    {
+        List <Double> values=stringToDoubles(string);
+        return new Double3(values.get(0), values.get(1), values.get(2));
+    }
+
     /**
      * method that parses the file stored in file name
      * @return a Scene object
@@ -182,7 +194,7 @@ public class XMLParser {
 
                 //handle ambient-light tag
                 if (element.getTagName().equals("ambient-light")) {
-                    scene.setAmbientLight(makeColor(element.getAttribute("color")), Double3.ONE);
+                    scene.setAmbientLight(makeColor(element.getAttribute("color")), makeDouble3(element.getAttribute("k")));
                 }
                 //handle geometries tag
                 else if (element.getTagName().equals("geometries")) {
