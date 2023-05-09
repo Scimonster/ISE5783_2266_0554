@@ -89,4 +89,13 @@ public class Plane extends Geometry{
         }
         return List.of(ray.getPoint(t));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof Plane)) return false;
+        Plane other = (Plane) obj;
+        return super.equals(other) && this.point.equals(other.point) && this.normal.equals(other.normal);
+    }
 }

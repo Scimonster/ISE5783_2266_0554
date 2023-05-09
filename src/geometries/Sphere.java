@@ -95,7 +95,17 @@ public class Sphere extends RadialGeometry{
           return null;
         }
 
+    }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Sphere))
+            return false;
+        Sphere other = (Sphere) obj;
+        return super.equals(other) && this.center.equals(other.center);
     }
 }

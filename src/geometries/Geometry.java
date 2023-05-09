@@ -43,4 +43,14 @@ public abstract class Geometry implements Intersectable {
         this.emission=emit;
         return this;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof Geometry)) return false;
+        Geometry other = (Geometry) obj;
+        return this.emission.equals(other.emission);
+        // overriding classes will check further
+    }
 }

@@ -2,6 +2,8 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 import primitives.Ray;
+import primitives.Util;
+
 import static primitives.Util.isZero;
 
 /**
@@ -62,5 +64,14 @@ public class Cylinder extends Tube {
 
         // on the tube, just use the super class
         return super.getNormal(point);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof Cylinder)) return false;
+        Cylinder other = (Cylinder) obj;
+        return super.equals(other) && Util.isZero(this.height - other.height);
     }
 }

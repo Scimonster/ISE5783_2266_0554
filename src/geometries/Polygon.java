@@ -145,7 +145,14 @@ public class Polygon extends Geometry {
       }
 
       return res;
+   }
 
-
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (obj == null) return false;
+      if (!(obj instanceof Polygon)) return false;
+      Polygon other = (Polygon) obj;
+      return super.equals(other) && this.vertices.equals(other.vertices);
    }
 }

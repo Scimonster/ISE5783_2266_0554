@@ -104,4 +104,13 @@ public class Color {
 
    @Override
    public String toString() { return "rgb:" + rgb; }
+
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (obj == null) return false;
+      if (!(obj instanceof Color)) return false;
+      Color other = (Color)obj;
+      return this.rgb.equals(other.rgb);
+   }
 }

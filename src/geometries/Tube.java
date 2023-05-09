@@ -60,4 +60,13 @@ public class Tube extends RadialGeometry {
     {
         return null;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof Tube)) return false;
+        Tube other = (Tube) obj;
+        return super.equals(other) && this.axisRay.equals(other.axisRay);
+    }
 }
