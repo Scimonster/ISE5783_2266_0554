@@ -20,7 +20,7 @@ public class SpotLight extends PointLight{
         super(intensity, position);
         if(direction==null)
             throw new IllegalArgumentException("must have a direction");
-        this.direction=direction;
+        this.direction=direction.normalize();
     }
 
     @Override
