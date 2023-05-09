@@ -4,6 +4,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,19 @@ public abstract class Geometry extends Intersectable {
 
     @Override
     abstract public List<Point> findIntersections(Ray ray);
+
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
+    {
+        List<Point> points = findIntersections(ray);
+        if (points == null) return null;
+
+        ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
+        for (Point pt: points) {
+            geoPoints.add(new GeoPoint(this, pt));
+        }
+        return geoPoints;
+    }
 
     /**
      * method that returns the emission color

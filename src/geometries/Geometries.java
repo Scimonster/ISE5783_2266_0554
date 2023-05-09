@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,15 +45,15 @@ public class Geometries extends Intersectable{
 
 
     @Override
-    public List<Point> findIntersections(Ray ray)
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
     {
          // 2 lists, one to hold the current shape's intersection points, and one to hold all the intersections
-         List<Point> res=null, cur=null;
+         List<GeoPoint> res=null, cur=null;
 
          //iterate through whole this.shapes, invoke findIntersections for each shape
          for (Intersectable shape: this.shapes)
          {
-             cur=shape.findIntersections(ray);
+             cur=shape.findGeoIntersections(ray);
              if(cur!=null)
              {
                  if (res==null)
@@ -68,6 +69,17 @@ public class Geometries extends Intersectable{
 
          return res;
 
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        List<GeoPoint> geoPoints = this.findGeoIntersections(ray);
+        if (geoPoints == null) return null;
+        List<Point> res = new LinkedList<>();
+        for (GeoPoint gpt: geoPoints) {
+            res.add(gpt.point);
+        }
+        return  res;
     }
 }
 

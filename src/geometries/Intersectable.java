@@ -80,6 +80,6 @@ public abstract class Intersectable {
      * @param ray
      * @return
      */
-    public abstract List<GeoPoint>  findGeoIntersectionsHelper(Ray ray);
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 
 }
