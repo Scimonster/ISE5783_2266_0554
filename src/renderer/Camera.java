@@ -176,8 +176,9 @@ public class Camera {
      *
      * Calls ray tracing for all pixels
      * @throws {MissingResourceException} if any properties are unset
+     * @return the object itself
      */
-    public void renderImage()
+    public Camera renderImage()
     {
         if (this.location == null)
             throw new MissingResourceException("missing location", "Point", "location");
@@ -197,6 +198,7 @@ public class Camera {
                 this.iw.writePixel(j, i, pixelColor);
             }
         }
+        return this;
     }
 
     /**
@@ -212,7 +214,7 @@ public class Camera {
         // loop over all x, y values, print the grid lines
         for (int j = 0; j < iw.getNx(); j++) {
             for (int i = 0; i < iw.getNy(); i++) {
-                if (j % interval == 0 || i % interval == 0 || j == iw.getNx()-1 ||  i == iw.getNy()-1 ) { // grid line
+                if (j % interval == 0 || i % interval == 0 || j == iw.getNx() - 1 || i == iw.getNy() - 1) { // grid line
                     iw.writePixel(j, i, color);
                 }
             }
@@ -221,12 +223,14 @@ public class Camera {
 
     /**
      * Write the generated image to file
+     * @return the object itself
      */
-    public void writeToImage() {
+    public Camera writeToImage() {
         if (this.iw == null)
             throw new MissingResourceException("missing imageWriter", "ImageWriter", "iw");
 
         iw.writeToImage();
+        return this;
     }
 
     /**

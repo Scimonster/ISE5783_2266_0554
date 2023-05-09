@@ -4,8 +4,13 @@ package scene;
 import lighting.AmbientLight;
 import geometries.Geometries;
 import geometries.Intersectable;
+import lighting.LightSource;
 import primitives.Color;
 import primitives.Double3;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Scene in a 3D model
@@ -15,8 +20,11 @@ import primitives.Double3;
 public class Scene {
     public String name;
     public Color background=Color.BLACK;
-    public AmbientLight ambient=new AmbientLight();;
-    public Geometries geometries=new Geometries();;
+    public AmbientLight ambient=new AmbientLight();
+
+    public Geometries geometries=new Geometries();
+
+    public List<LightSource> lights=new LinkedList<>();
 
     /**
      * constructor to initialize name
@@ -46,6 +54,21 @@ public class Scene {
     public Scene addGeometries(Intersectable...geometries)
     {
         this.geometries.add(geometries);
+        return this;
+    }
+
+    /**
+     * add lights to a scene
+     * @param lights
+     * @return
+     */
+    public Scene addLightSource(LightSource ... lights)
+    {
+        for (LightSource light : lights)
+        {
+            this.lights.add(light);
+        }
+
         return this;
     }
 

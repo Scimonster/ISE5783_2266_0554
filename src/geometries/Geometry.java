@@ -1,8 +1,5 @@
 package geometries;
-import primitives.Color;
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
 public abstract class Geometry extends Intersectable {
 
     protected Color emission = Color.BLACK;
+    private Material material= new Material();
 
     /**
      * Get the normal vector to the geometry at a given point
@@ -64,5 +62,26 @@ public abstract class Geometry extends Intersectable {
         Geometry other = (Geometry) obj;
         return this.emission.equals(other.emission);
         // overriding classes will check further
+    }
+
+    /**
+     * get material
+     * @return
+     */
+    public Material getMaterial() {
+        return material;
+    }
+
+    /**
+     * set material
+     * @param mat
+     * @return the object itself
+     */
+    public Geometry setMaterial(Material mat)
+    {
+        if (mat==null)
+            throw new IllegalArgumentException("material can't be null");
+        this.material=mat;
+        return this;
     }
 }
