@@ -5,6 +5,9 @@ import primitives.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Composite design patter for geometries
+ */
 public class Geometries implements Intersectable{
     private List<Intersectable> shapes;
 
@@ -13,6 +16,10 @@ public class Geometries implements Intersectable{
         shapes=new LinkedList<Intersectable>();
     }
 
+    /**
+     * construct Geometries with a list of intersectables
+     * @param shapes
+     */
     public Geometries(Intersectable ... shapes)
     {
         this();
@@ -21,6 +28,12 @@ public class Geometries implements Intersectable{
 
     }
 
+
+    /**
+     * method to add intersectables to Geometries
+     * @param shapes list of geometries
+     */
+
     public void add(Intersectable ... shapes)
     {
         for(Intersectable shape: shapes)
@@ -28,6 +41,7 @@ public class Geometries implements Intersectable{
             this.shapes.add(shape);
         }
     }
+
 
     @Override
     public List<Point> findIntersections(Ray ray)
