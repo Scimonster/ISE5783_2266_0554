@@ -71,15 +71,5 @@ public class Geometries extends Intersectable{
 
     }
 
-    @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<GeoPoint> geoPoints = this.findGeoIntersections(ray);
-        if (geoPoints == null) return null;
-        List<Point> res = new LinkedList<>();
-        for (GeoPoint gpt: geoPoints) {
-            res.add(gpt.point);
-        }
-        return  res;
-    }
 }
 

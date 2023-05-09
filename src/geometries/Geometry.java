@@ -22,9 +22,6 @@ public abstract class Geometry extends Intersectable {
     abstract public Vector getNormal(Point point);
 
     @Override
-    abstract public List<Point> findIntersections(Ray ray);
-
-    @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
     {
         List<Point> points = findIntersections(ray);

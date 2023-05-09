@@ -1,6 +1,7 @@
 package geometries;
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -62,8 +63,15 @@ public abstract class Intersectable {
      * @param ray the ray being shot
      * @return a list of points
      */
-
-    public abstract List<Point> findIntersections(Ray ray);
+    public List<Point> findIntersections(Ray ray) {
+        List<GeoPoint> geoPoints = this.findGeoIntersections(ray);
+        if (geoPoints == null) return null;
+        List<Point> res = new LinkedList<>();
+        for (GeoPoint gpt: geoPoints) {
+            res.add(gpt.point);
+        }
+        return res;
+    }
 
     /**
      * method to find GeoIntersections

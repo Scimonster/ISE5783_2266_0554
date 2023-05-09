@@ -65,7 +65,7 @@ public class Plane extends Geometry{
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray)
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
     {
         //if the start point of the ray is in the plane
         if(this.point.equals(ray.getP0()))
@@ -87,7 +87,7 @@ public class Plane extends Geometry{
         if (t <= 0) {
             return null;
         }
-        return List.of(ray.getPoint(t));
+        return List.of(new GeoPoint(this, ray.getPoint(t)));
     }
 
     @Override

@@ -85,10 +85,10 @@ public class Polygon extends Geometry {
    public Vector getNormal(Point point) { return plane.getNormal(); }
 
    @Override
-   public List<Point> findIntersections(Ray ray)
+   protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
    {
-      //check if it falls in plane of ploygon
-      List<Point> res=this.plane.findIntersections(ray);
+      //check if it falls in plane of polygon
+      List<Point> res=this.plane.findIntersections(ray); // not geo point
 
       if (res==null)
       {
@@ -144,7 +144,7 @@ public class Polygon extends Geometry {
          }
       }
 
-      return res;
+      return List.of(new GeoPoint(this, res.get(0)));
    }
 
    @Override
