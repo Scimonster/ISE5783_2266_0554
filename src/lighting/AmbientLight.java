@@ -4,11 +4,9 @@ import primitives.*;
 /**
  * standard ambient lighting class
  */
-public class AmbientLight {
+public class AmbientLight extends Light{
 
     public static final AmbientLight NONE = new AmbientLight(Color.BLACK, Double3.ZERO);
-
-    private Color intensity;
 
     /**
      * construct ambient light
@@ -17,7 +15,7 @@ public class AmbientLight {
      */
     public AmbientLight(Color iA, Double3 kA)
     {
-        this.intensity=iA.scale(kA);
+       super(iA.scale(kA));
     }
 
     /**
@@ -25,11 +23,8 @@ public class AmbientLight {
      */
     public AmbientLight()
     {
-        this.intensity=Color.BLACK;
+        super(Color.BLACK);
     }
 
-    public Color getIntensity()
-    {
-        return this.intensity;
-    }
+
 }
