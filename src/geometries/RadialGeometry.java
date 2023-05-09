@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
+import primitives.Util;
 
 import java.util.List;
 
@@ -31,6 +32,21 @@ public abstract class RadialGeometry extends Geometry {
     public double getRadius()
     {
         return this.radius;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this==obj)
+            return true;
+        if (obj==null)
+            return false;
+        if (!(obj instanceof RadialGeometry))
+            return false;
+
+        RadialGeometry other = (RadialGeometry) obj;
+
+        return Util.isZero(this.radius-other.radius);
     }
 
 

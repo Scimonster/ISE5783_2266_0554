@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Composite design patter for geometries
  */
-public class Geometries implements Intersectable{
+public class Geometries extends Intersectable{
     private List<Intersectable> shapes;
 
     public Geometries()

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * A generic Geometry object in our model
  */
-public abstract class Geometry implements Intersectable {
+public abstract class Geometry extends Intersectable {
 
     protected Color emission = Color.BLACK;
 
@@ -18,8 +18,9 @@ public abstract class Geometry implements Intersectable {
      * @param point Point to get the normal based on
      * @return Normal vector to the given point
      */
-    abstract Vector getNormal(Point point);
+    abstract public Vector getNormal(Point point);
 
+    @Override
     abstract public List<Point> findIntersections(Ray ray);
 
     /**

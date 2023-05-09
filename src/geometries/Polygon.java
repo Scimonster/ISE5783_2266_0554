@@ -155,4 +155,6 @@ public class Polygon extends Geometry {
       Polygon other = (Polygon) obj;
       return super.equals(other) && this.vertices.equals(other.vertices);
    }
+
+
 }
