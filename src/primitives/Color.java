@@ -12,6 +12,14 @@ public class Color {
 
    /** Black color = (0,0,0) */
    public static final Color BLACK = new Color();
+   /** White color = (255,255,255) */
+   public static final Color WHITE = new Color(255, 255, 255);
+   /** Red color = (255,0,0) */
+   public static final Color RED = new Color(255, 0, 0);
+   /** Green color = (0,255,0) */
+   public static final Color GREEN = new Color(0, 255, 0);
+   /** Blue color = (0,0,255) */
+   public static final Color BLUE = new Color(0, 0, 255);
 
    /** Default constructor - to generate Black Color (privately) */
    private Color() { rgb = Double3.ZERO; }

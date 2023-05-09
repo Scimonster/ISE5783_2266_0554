@@ -3,6 +3,7 @@ import primitives.*;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * interface for objects that can be intersected by a ray
@@ -64,13 +65,9 @@ public abstract class Intersectable {
      * @return a list of points
      */
     public List<Point> findIntersections(Ray ray) {
-        List<GeoPoint> geoPoints = this.findGeoIntersections(ray);
-        if (geoPoints == null) return null;
-        List<Point> res = new LinkedList<>();
-        for (GeoPoint gpt: geoPoints) {
-            res.add(gpt.point);
-        }
-        return res;
+        var geoList = findGeoIntersections(ray);
+        return geoList == null ? null
+                : geoList.stream().map(gp -> gp.point).collect(Collectors.toList());
     }
 
     /**
