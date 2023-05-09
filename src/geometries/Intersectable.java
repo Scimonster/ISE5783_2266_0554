@@ -65,4 +65,21 @@ public abstract class Intersectable {
 
     public abstract List<Point> findIntersections(Ray ray);
 
+    /**
+     * method to find GeoIntersections
+     * @param ray
+     * @return a list of geoIntersections
+     */
+    public List<GeoPoint> findGeoIntersections(Ray ray)
+    {
+        return this.findGeoIntersectionsHelper(ray);
+    }
+
+    /**
+     * helper method for intersections
+     * @param ray
+     * @return
+     */
+    public abstract List<GeoPoint>  findGeoIntersectionsHelper(Ray ray);
+
 }
