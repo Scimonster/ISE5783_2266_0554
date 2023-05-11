@@ -185,6 +185,43 @@ public class LightsTests {
               .setRayTracer(new RayTracerBasic(scene1)) //
               .renderImage() //
               .writeToImage(); //
+
+
+   }
+
+   @Test
+   public void testSphereRotations() {
+      scene1.geometries.add(sphere);
+      scene1.addLightSource(
+              new SpotLight(trianglesLightColor, new Point(100, -250, 150), new Vector(0.1, 0.5, -1))
+                      .setKl(0.001).setKq(0.0001),
+              new PointLight(trianglesLightColor, new Point(-100, -50, 50))
+                      .setKl(0.01).setKq(0.000007),
+              new DirectionalLight(sphereLightColor, new Vector(-1, -1, 0.2))
+      );
+
+      ImageWriter im =new ImageWriter("RotationRightTest", 500, 500);
+      camera1.setImageWriter(im)
+              .setRayTracer(new RayTracerBasic(scene1)) //
+              .rotateByRight(5)
+              .renderImage()
+              .writeToImage();
+
+      im=new ImageWriter("RotationToTest", 500, 500);
+      camera1.setImageWriter(im)
+              .setRayTracer(new RayTracerBasic(scene1)) //
+              .rotateByRight(-5).
+              rotateByTo(90)
+              .renderImage()
+              .writeToImage();
+
+      im=new ImageWriter("RotationUpTest", 500, 500);
+      camera1.setImageWriter(im)
+              .setRayTracer(new RayTracerBasic(scene1)) //
+              .rotateByTo(-5).
+              rotateByUp(5)
+              .renderImage()
+              .writeToImage();
    }
 //
 //   /** Produce a picture of a sphere lighted by a narrow spotlight */

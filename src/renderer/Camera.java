@@ -285,17 +285,44 @@ public class Camera {
      * @param theta angle to rotate
      * @return rotated vector
      */
-    private Vector rotateVector(Vector v, double theta)
+    private Vector rotateVector(Vector v1, Vector v2, double deg)
     {
-        // rotation matrix
-        Vector  row1 = new Vector(1, 0, 0),
-                row2 = new Vector(0, Math.cos(theta), -Math.sin(theta)),
-                row3 = new Vector(0, Math.sin(theta), Math.cos(theta));
-        return new Vector(
-                v.dotProduct(row1),
-                v.dotProduct(row2),
-                v.dotProduct(row3)
-        );
+        double theta = Math.toRadians(deg);
+        if (Util.isZero(Math.cos(theta)))
+            return v2.scale(Math.sin(theta));
+        else if (Util.isZero(Math.sin(theta)))
+            return v1.scale(Math.cos(theta));
+        return v1.scale(Math.cos(theta)).add(v2.scale(Math.sin(theta)));
+    }
+
+    public Camera rotateByTo(double theta)
+    {
+        Vector v1=rotateVector(this.vUp, this.vRight, theta);
+        Vector v2=rotateVector(this.vRight, this.vUp, -theta);
+
+        this.vUp=v1;
+        this.vRight=v2;
+        return this;
+    }
+
+    public Camera rotateByUp(double theta)
+    {
+        Vector v1=rotateVector(this.vTo, this.vRight, theta);
+        Vector v2=rotateVector(this.vRight, this.vTo, -theta);
+
+        this.vTo=v1;
+        this.vRight=v2;
+        return this;
+    }
+
+    public Camera rotateByRight(double theta)
+    {
+        Vector v1=rotateVector(this.vUp, this.vTo, theta);
+        Vector v2=rotateVector(this.vTo, this.vUp, -theta);
+
+        this.vUp=v1;
+        this.vTo=v2;
+        return this;
     }
 
 }
