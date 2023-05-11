@@ -8,6 +8,7 @@ import primitives.*;
 public class SpotLight extends PointLight{
 
     private Vector direction;
+    private int narrow=1;
 
     /**
      * construct
@@ -26,6 +27,24 @@ public class SpotLight extends PointLight{
     @Override
     public Color getIntensity(Point p)
     {
-        return super.getIntensity(p).scale(Math.max(0,this.direction.dotProduct(this.getL(p))));
+        // point light attenuation by distance, multiplied with spotlight focus and narrowing
+        return super.getIntensity(p).scale(
+                Math.pow(Math.max(0,direction.dotProduct(this.getL(p))), narrow)
+        );
+    }
+
+    /**
+     * Set spotlight narrowing factor
+     * @param x narrowing
+     * @return object for chaining
+     */
+    public SpotLight setNarrowBeam(int x)
+    {
+        if (x<=0)
+        {
+            throw new IllegalArgumentException("Must be positive");
+        }
+        this.narrow=x;
+        return this;
     }
 }
