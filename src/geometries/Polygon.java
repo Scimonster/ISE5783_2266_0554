@@ -88,7 +88,7 @@ public class Polygon extends Geometry {
    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
    {
       //check if it falls in plane of polygon
-      List<Point> res=this.plane.findIntersections(ray); // not geo point
+      List<GeoPoint> res=this.plane.findGeoIntersections(ray); // not geo point
 
       if (res==null)
       {
@@ -97,7 +97,7 @@ public class Polygon extends Geometry {
 
       //check if all the crossProducts are in same directions
       Point p1, p2;
-      Point intersect=res.get(0);
+      Point intersect=res.get(0).point;
       List<Vector> crossList= new ArrayList<Vector>(this.vertices.size());
       Vector v1;
       Vector v2;
@@ -144,7 +144,7 @@ public class Polygon extends Geometry {
          }
       }
 
-      return List.of(new GeoPoint(this, res.get(0)));
+      return List.of(new GeoPoint(this, intersect));
    }
 
    @Override

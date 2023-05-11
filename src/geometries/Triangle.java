@@ -33,7 +33,7 @@ public class Triangle extends Polygon {
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
     {
-        List<Point> res= this.plane.findIntersections(ray);
+        List<GeoPoint> res= this.plane.findGeoIntersections(ray);
 
         if(res==null) {
             return null;
@@ -58,7 +58,7 @@ public class Triangle extends Polygon {
         if ( Util.checkSign(dot1, dot2)&& Util.checkSign(dot2, dot3))
         {
             // all the dot products have same sign -- point is inside triangle
-            return List.of(new GeoPoint(this, res.get(0)));
+            return List.of(new GeoPoint(this, res.get(0).point));
         }
         return null;
    }
