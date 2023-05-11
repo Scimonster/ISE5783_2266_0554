@@ -40,7 +40,7 @@ public class SpotLight extends PointLight{
      */
     public SpotLight setNarrowBeam(int x)
     {
-        if (x<=0)
+        if (Util.alignZero(x)<=0)
         {
             throw new IllegalArgumentException("Must be positive");
         }
