@@ -8,7 +8,6 @@ import lighting.LightSource;
 import primitives.Color;
 import primitives.Double3;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 

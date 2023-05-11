@@ -1,5 +1,9 @@
 package primitives;
 
+/**
+ * A material which a geometry can have
+ * Holds diffusion, specular, and shininess factors
+ */
 public class Material {
 
     public Double3 kD=Double3.ZERO, kS=Double3.ZERO;
@@ -8,8 +12,9 @@ public class Material {
 
     /**
      * set kD
-     * @param kD
-     * @return
+     *
+     * @param kD diffusion coefficient (different for red, green, and blue)
+     * @return the object itself for chaining
      */
     public Material setKd(Double3 kD)
     {
@@ -21,8 +26,9 @@ public class Material {
 
     /**
      * set kS
-     * @param kS
-     * @return the object itself
+     *
+     * @param kS specular coefficient (different for red, green, and blue)
+     * @return the object itself for chaining
      */
 
     public Material setKs(Double3 kS)
@@ -37,8 +43,8 @@ public class Material {
 
     /**
      * set kD
-     * @param kD
-     * @return the object itself
+     * @param kD diffusion coefficient (single value)
+     * @return the object itself for chaining
      */
     public Material setKd(double kD)
     {
@@ -48,8 +54,8 @@ public class Material {
 
     /**
      * set kS
-     * @param kS
-     * @return the object itself
+     * @param kS specular coefficient (single value)
+     * @return the object itself for chaining
      */
     public Material setKs(double kS)
     {
@@ -59,8 +65,8 @@ public class Material {
 
     /**
      * set nShininess
-     * @param nShininess
-     * @return the object itself
+     * @param nShininess material shininess factor
+     * @return the object itself for chaining
      */
     public Material setShininess(int nShininess) {
         this.nShininess = nShininess;

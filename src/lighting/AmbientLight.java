@@ -19,7 +19,7 @@ public class AmbientLight extends Light{
     }
 
     /**
-     * default construct
+     * default constructor -- black ambient light
      */
     public AmbientLight()
     {

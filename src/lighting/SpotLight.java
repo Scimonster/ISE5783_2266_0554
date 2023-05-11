@@ -3,7 +3,7 @@ package lighting;
 import primitives.*;
 
 /**
- * Point light
+ * Spot light -- like point light but focused in a direction
  */
 public class SpotLight extends PointLight{
 

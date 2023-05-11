@@ -40,28 +40,28 @@ public class RayTracerBasic extends RayTracerBase {
      * Calculate the color of a point in a scene.
      * Currently: just ambient lighting
      * @param gpt Point in scene (with its geometry)
+     * @param ray the camera ray
      * @return color of the point
      */
     private Color calcColor(GeoPoint gpt, Ray ray) {
         return scene.ambient.getIntensity().add(calcLocalEffects(gpt, ray));
-
     }
 
     /**
-     * calculating local effects of lights
-     * @param gp
-     * @param ray
-     * @return
+     * calculating local effects of lights on a point
+     * @param gp the point (with its geometry)
+     * @param ray the camera ray
+     * @return the color of the point
      */
     private Color calcLocalEffects(GeoPoint gp, Ray ray) {
+        // start with emission light of the geometry
         Color color = gp.geometry.getEmission();
 
-        Vector v = ray.getDir ();
-
+        Vector v = ray.getDir();
         Vector n = gp.geometry.getNormal(gp.point);
 
         double nv = Util.alignZero(n.dotProduct(v));
-
+        // looking perpendicular to the geometry, won't see any lighting effects
         if (nv == 0)
             return color;
 
@@ -69,10 +69,11 @@ public class RayTracerBasic extends RayTracerBase {
         for (LightSource lightSource : scene.lights)
         {
             Vector l = lightSource.getL(gp.point);
-
             double nl = Util.alignZero(n.dotProduct(l));
-            if (nl * nv > 0)
-            { // sign(nl) == sing(nv)
+            // make sure light and camera are hitting the geometry from the same side
+            if (Util.checkSign(nl, nv))
+            {
+                // apply diffuse and specular effects
                 Color iL = lightSource.getIntensity(gp.point);
                 color = color.add(iL.scale(calcDiffusive(mat, nl)),
                         iL.scale(calcSpecular(mat, n, l, nl, v)));
@@ -82,16 +83,25 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * helper function that calculates Diffusive attribute
-     * @param mat
-     * @param nl
-     * @return
+     * helper function that calculates diffusive attribute
+     * @param mat material
+     * @param nl dot product of geometry normal and light vector
+     * @return diffusive coefficient
      */
     private Double3 calcDiffusive(Material mat, double nl)
     {
         return mat.kD.scale(Math.abs(nl));
     }
 
+    /**
+     * helper function that calculates specular attribute
+     * @param mat material
+     * @param n geometry normal
+     * @param l light vector
+     * @param nl n dot l
+     * @param v camera ray
+     * @return specular coefficient
+     */
     private Double3 calcSpecular(Material mat, Vector n, Vector l, double nl, Vector v)
     {
         Vector reflect=l.subtract(n.scale(2*nl));
@@ -100,6 +110,5 @@ public class RayTracerBasic extends RayTracerBase {
 
         return mat.kS.scale(spec);
     }
-
 
 }
