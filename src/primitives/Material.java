@@ -6,9 +6,13 @@ package primitives;
  */
 public class Material {
 
-    public Double3 kD=Double3.ZERO, kS=Double3.ZERO;
+    /**
+     * Attributes of material
+     */
+    public Double3 kD=Double3.ZERO, kS=Double3.ZERO, kT=Double3.ZERO, kR=Double3.ZERO;
 
     public int nShininess=0;
+
 
     /**
      * set kD
@@ -70,6 +74,54 @@ public class Material {
      */
     public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
+        return this;
+    }
+
+    /**
+     * set transparency coefficient
+     * @param kT
+     * @return
+     */
+    public Material setKt(Double3 kT)
+    {
+        if (kT==null)
+            throw new IllegalArgumentException("can't be null");
+        this.kT = kT;
+        return this;
+    }
+
+    /**
+     * set reflection coefficient
+     * @param kR
+     * @return the object itself
+     */
+    public Material setKr(Double3 kR)
+    {
+        if (kR==null)
+            throw new IllegalArgumentException("can't be null");
+        this.kR = kR;
+        return this;
+    }
+
+    /**
+     * set transparency coefficient
+     * @param kT
+     * @return the object itself
+     */
+    public Material setKt(double kT)
+    {
+        this.kT=new Double3(kT);
+        return this;
+    }
+
+    /**
+     * set reflection coefficient
+     * @param kR
+     * @return the object itself
+     */
+    public Material setKr(double kR)
+    {
+        this.kR=new Double3(kR);
         return this;
     }
 }
