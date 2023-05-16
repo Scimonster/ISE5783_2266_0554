@@ -45,7 +45,7 @@ public class Geometries extends Intersectable{
 
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance)
     {
          // 2 lists, one to hold the current shape's intersection points, and one to hold all the intersections
          List<GeoPoint> res=null, cur=null;
@@ -53,7 +53,7 @@ public class Geometries extends Intersectable{
          //iterate through whole this.shapes, invoke findIntersections for each shape
          for (Intersectable shape: this.shapes)
          {
-             cur=shape.findGeoIntersections(ray);
+             cur=shape.findGeoIntersections(ray, maxDistance);
              if(cur!=null)
              {
                  if (res==null)

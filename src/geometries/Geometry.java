@@ -19,19 +19,6 @@ public abstract class Geometry extends Intersectable {
      */
     abstract public Vector getNormal(Point point);
 
-    @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
-    {
-        List<Point> points = findIntersections(ray);
-        if (points == null) return null;
-
-        ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
-        for (Point pt: points) {
-            geoPoints.add(new GeoPoint(this, pt));
-        }
-        return geoPoints;
-    }
-
     /**
      * method that returns the emission color
      * @return

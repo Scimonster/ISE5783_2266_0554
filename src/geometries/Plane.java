@@ -65,7 +65,7 @@ public class Plane extends Geometry{
     }
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance)
     {
         //if the start point of the ray is in the plane
         if(this.point.equals(ray.getP0()))
@@ -84,9 +84,12 @@ public class Plane extends Geometry{
         //take dot product of the normal and the vector made by the point minus the ray origin, if it is greater than 0, use that as a scalar in get point to get the intersection
         //else there is no intersections
         double t = Util.alignZero(normal.dotProduct(point.subtract(ray.getP0())) / nDotV);
-        if (t <= 0) {
+        if (t <= 0 || Util.alignZero(t-maxDistance)>0) {
             return null;
         }
+
+
+
         return List.of(new GeoPoint(this, ray.getPoint(t)));
     }
 

@@ -75,7 +75,7 @@ public class RayTracerBasic extends RayTracerBase {
             double nl = Util.alignZero(n.dotProduct(l));
             // make sure light and camera are hitting the geometry from the same side
             if (Util.checkSign(nl, nv))
-            {    if (unshaded(gp , l, n))
+            {    if (unshaded(gp , l, n, lightSource, nl))
                 {
                     // apply diffuse and specular effects
                     Color iL = lightSource.getIntensity(gp.point);
@@ -121,18 +121,21 @@ public class RayTracerBasic extends RayTracerBase {
      * @param gp the point
      * @param l the vector from the lightsource
      * @param n the normal vector from that point
+     * @param light
+     * @param nl
      * @return if the point should be unshaded (effected by the light source) (boolean)
      */
-    private boolean unshaded(GeoPoint gp , Vector l, Vector n)
+    private boolean unshaded(GeoPoint gp , Vector l, Vector n, LightSource light, double nl)
     {
         Vector lightDirection = l.scale(-1); // from point to light source
 
-        Vector epsVector = n.scale(DELTA);
+        Vector epsVector = n.scale(nl < 0 ? DELTA : -DELTA);
+
 
         Point point = gp.point.add(epsVector);
         Ray lightRay = new Ray(point, lightDirection);
 
-        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, light.getDistance(gp.point));
 
         return intersections==null;
     }

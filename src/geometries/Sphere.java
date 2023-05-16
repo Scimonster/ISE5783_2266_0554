@@ -46,7 +46,7 @@ public class Sphere extends RadialGeometry{
     }
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance)
     {
         double tm, d;
         if(this.center.equals(ray.getP0()))
@@ -77,8 +77,17 @@ public class Sphere extends RadialGeometry{
         double t1 = Util.alignZero(tm +th);
         double t2 = Util.alignZero(tm-th);
 
+        // make sure distances are within given distance range
+        // if not, forcefully exclude it by being super negative
+        if (Util.alignZero(t1-maxDistance)>0)
+            t1 = Double.NEGATIVE_INFINITY;
+        if(Util.alignZero(t1-maxDistance)>0)
+            t2 = Double.NEGATIVE_INFINITY;
+
+
+
         //return the correct points based on the positivity of t1, t2
-        if (t1>0 && t2 >0)
+        if (t1>0 && t2>0)
         {
             return List.of(
                 new GeoPoint(this, ray.getPoint(t1)),
@@ -88,6 +97,10 @@ public class Sphere extends RadialGeometry{
         else if (t1>0 && t2<=0)
         {
             return List.of(new GeoPoint(this, ray.getPoint(t1)));
+        }
+        else if (t2>0 && t1<=0) // this wouldn't happen naturally, but can when faking distance
+        {
+            return List.of(new GeoPoint(this, ray.getPoint(t2)));
         }
         else
         {
