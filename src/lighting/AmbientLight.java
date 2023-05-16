@@ -19,6 +19,16 @@ public class AmbientLight extends Light{
     }
 
     /**
+     * construct ambient light
+     * @param iA intensity
+     * @param kA attenuation
+     */
+    public AmbientLight(Color iA, double kA)
+    {
+        this(iA, new Double3(kA));
+    }
+
+    /**
      * default constructor -- black ambient light
      */
     public AmbientLight()
