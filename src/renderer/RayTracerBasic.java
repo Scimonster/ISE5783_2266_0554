@@ -11,6 +11,9 @@ import geometries.Intersectable.GeoPoint;
  * Basic ray tracer
  */
 public class RayTracerBasic extends RayTracerBase {
+
+    private static final double DELTA = 0.1;
+
     /**
      * Init a ray tracer
      * @param scene the scene to draw
@@ -72,11 +75,13 @@ public class RayTracerBasic extends RayTracerBase {
             double nl = Util.alignZero(n.dotProduct(l));
             // make sure light and camera are hitting the geometry from the same side
             if (Util.checkSign(nl, nv))
-            {
-                // apply diffuse and specular effects
-                Color iL = lightSource.getIntensity(gp.point);
-                color = color.add(iL.scale(calcDiffusive(mat, nl)),
-                        iL.scale(calcSpecular(mat, n, l, nl, v)));
+            {    if (unshaded(gp , l, n))
+                {
+                    // apply diffuse and specular effects
+                    Color iL = lightSource.getIntensity(gp.point);
+                    color = color.add(iL.scale(calcDiffusive(mat, nl)),
+                            iL.scale(calcSpecular(mat, n, l, nl, v)));
+                }
             }
         }
         return color;
@@ -109,6 +114,27 @@ public class RayTracerBasic extends RayTracerBase {
         double spec = Math.pow(Math.max(0, v.scale(-1).dotProduct(reflect)), mat.nShininess);
 
         return mat.kS.scale(spec);
+    }
+
+    /**
+     * function that returns true whether a point is unshaded
+     * @param gp the point
+     * @param l the vector from the lightsource
+     * @param n the normal vector from that point
+     * @return if the point should be unshaded (effected by the light source) (boolean)
+     */
+    private boolean unshaded(GeoPoint gp , Vector l, Vector n)
+    {
+        Vector lightDirection = l.scale(-1); // from point to light source
+
+        Vector epsVector = n.scale(DELTA);
+
+        Point point = gp.point.add(epsVector);
+        Ray lightRay = new Ray(point, lightDirection);
+
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+
+        return intersections==null;
     }
 
 }
