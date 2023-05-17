@@ -76,7 +76,8 @@ public class Double3 {
     * number is multiplied by the number
     * @param  rhs right handle side operand for scaling
     * @return     result of scale */
-   public Double3 scale(double rhs) {
+   public Double3 scale(double rhs)
+   {
       return new Double3(d1 * rhs, d2 * rhs, d3 * rhs);
    }
 
