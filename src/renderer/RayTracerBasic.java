@@ -65,7 +65,7 @@ public class RayTracerBasic extends RayTracerBase {
         if (level <= 0)
             return Color.BLACK; // no additive property
 
-        return calcLocalEffects(gpt, ray) // local lighting effects
+        return calcLocalEffects(gpt, ray, k) // local lighting effects
                 .add(calcGlobalEffects(gpt, ray, level, k)); // global reflection/refraction effects
     }
 
@@ -87,7 +87,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param ray the camera ray
      * @return the color of the point
      */
-    private Color calcLocalEffects(GeoPoint gp, Ray ray) {
+    private Color calcLocalEffects(GeoPoint gp, Ray ray, Double3 k) {
         // start with emission light of the geometry
         Color color = gp.geometry.getEmission();
 
@@ -106,10 +106,15 @@ public class RayTracerBasic extends RayTracerBase {
             double nl = Util.alignZero(n.dotProduct(l));
             // make sure light and camera are hitting the geometry from the same side
             if (Util.checkSign(nl, nv))
-            {    if (unshaded(gp , l, n, lightSource, nl))
-                {
+            {
+                Double3 ktr = transparency(gp, l, n, lightSource, nl);
+
+                if (!ktr.product(k).lowerThan(MIN_CALC_COLOR_K)) {
+
+                    // if (unshaded(gp , l, n, lightSource, nl))
+
                     // apply diffuse and specular effects
-                    Color iL = lightSource.getIntensity(gp.point);
+                    Color iL = lightSource.getIntensity(gp.point).scale(ktr);
                     color = color.add(iL.scale(calcDiffusive(mat, nl)),
                             iL.scale(calcSpecular(mat, n, l, nl, v)));
                 }
@@ -238,5 +243,39 @@ public class RayTracerBasic extends RayTracerBase {
     private Ray constructRefractedRay(Point point, Ray inRay)
     {
         return new Ray(point, inRay.getDir());
+    }
+
+    /**
+     * method that returns the transparency index for partial shadows
+     * @param gp
+     * @param l
+     * @param n
+     * @param light
+     * @param nl
+     * @return Double3 transparency
+     */
+    private Double3 transparency(GeoPoint gp , Vector l, Vector n, LightSource light, double nl)
+    {
+        Vector lightDirection = l.scale(-1); // from point to light source
+
+        Vector epsVector = n.scale(nl < 0 ? DELTA : -DELTA);
+
+
+        Point point = gp.point.add(epsVector);
+        Ray lightRay = new Ray(point, lightDirection);
+
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, light.getDistance(gp.point));
+
+        Double3 ktr=Double3.ONE;
+        if (intersections == null) return ktr;
+
+
+        // get the cumulative (multiplicative) transparency coefficient
+        for (GeoPoint intersection: intersections) {
+             ktr = ktr.product(intersection.geometry.getMaterial().kT);
+        }
+
+        return ktr;
+
     }
 }

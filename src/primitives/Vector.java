@@ -48,7 +48,10 @@ public class Vector extends Point {
      * @return new vector multiplied by scalar
      */
     public Vector scale(double c) {
-        return new Vector(this.xyz.scale(c));
+        double _c=Util.alignZero(c);
+        if(_c==0)
+            throw new IllegalArgumentException("Cannot scale by zero");
+        return new Vector(this.xyz.scale(_c));
     }
 
     /**
