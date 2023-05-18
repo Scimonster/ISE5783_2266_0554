@@ -25,9 +25,12 @@ public class FullRender {
                 D= new Point(10, -10,10),
                 E = new Point(10, -10, -10);
 
+//        (0, 10, 0)
+//        (10,-7,-25)
+//        (-10, 17, 25)
 
         Color color=new Color(180,180,180);
-        Material mat=new Material().setKd(0.3).setKs(0.2).setKr(0.5).setShininess(1);
+        Material mat=new Material().setKd(0.2).setKs(0.05).setKr(0.5).setShininess(1);
 
 
         Geometry t1=new Triangle(A,B,C).setMaterial(mat).setEmission(Color.BLUE),
@@ -68,11 +71,11 @@ public class FullRender {
         Scene scene=new Scene("original");
 
         scene.addLightSource( //
-                new SpotLight(new Color(1000, 600, 0), new Point(-10, -10, 50), new Vector(0, 0, -2)).setNarrowBeam(3) //
-                        .setKl(0.0004).setKq(0.0000006),
+                new SpotLight(new Color(1000, 600, 0), new Point(-10, -10, -20), new Vector(0.1, 0.1, 2)).setNarrowBeam(3) //
+                        .setKl(0.0004).setKq(0.00006),
 //                new DirectionalLight(new Color(255,0,0), new Vector(0,0,5))
-                new DirectionalLight(new Color(255,0,0), new Vector(10,-7,-25)),
-                new PointLight(new Color(255, 172, 75), new Point(-20, -5, 15)).setKl(0.0002).setKq(0.000004)
+                new DirectionalLight(new Color(255,0,0), new Vector(0,-1,-5)),
+                new PointLight(new Color(255, 172, 75), new Point(-20, -5, 15)).setKl(0.002).setKq(0.00004)
         );
 
         scene.geometries.add(pyramid, sphere, plane, poly, pyramid2);
