@@ -27,8 +27,7 @@ public class FullRender {
 
 
         Color color=new Color(180,180,180);
-        Material mat=new Material().setKd(0.5).setKs(0.2).setKr(0.6).setShininess(1);
-
+        Material mat=new Material().setKd(0.3).setKs(0.2).setKr(0.5).setShininess(1);
 
 
         Geometry t1=new Triangle(A,B,C).setMaterial(mat).setEmission(Color.BLUE),
@@ -54,16 +53,14 @@ public class FullRender {
         Geometries pyramid2 = new Geometries(t11, t22, t33, t44, square1);
 
 
+        Geometry plane = new Plane(new Point(0,0,-50), new Vector(0,0.5,4)).setMaterial(new Material().setKr(0.7).setShininess(50)).setEmission(new Color(0,62,0));
 
-
-        Geometry plane = new Plane(new Point(0,0,-25), new Vector(0,0.5,3)).setMaterial(new Material().setKr(0.7).setShininess(50)).setEmission(new Color(0,62,0));
-
-        Geometry poly=new Polygon(new Point(-10,-10,60), new Point(10,-10,60), new Point(5,5,60), new Point(-5,5,60)).setMaterial(new Material().setKt(0.3)).setEmission(new Color(255,16, 200));
+        Geometry poly=new Polygon(new Point(-10,-5,60), new Point(10,-5,60), new Point(5,10,60), new Point(-5,10,60)).setMaterial(new Material().setKt(0.3)).setEmission(new Color(255,16, 200));
 
 
         //sphere
         Point sph = new Point(0,10, 0);
-        Geometry sphere= new Sphere(sph, 10d).setMaterial(mat.setShininess(20)).setEmission(Color.BLUE);
+        Geometry sphere= new Sphere(sph, 10d).setMaterial(mat.setShininess(20).setKt(0.1)).setEmission(Color.BLUE);
 
 
         Camera camera=new Camera(new Point(-20,-10,75), new Vector(0,0,-1), new Vector(0,1,0)).setVPSize(50,50).setVPDistance(50);
@@ -71,10 +68,12 @@ public class FullRender {
         Scene scene=new Scene("original");
 
         scene.addLightSource( //
-                new SpotLight(new Color(1000, 600, 0), new Point(-100, -100, 500), new Vector(-1, -1, -2)) //
+                new SpotLight(new Color(1000, 600, 0), new Point(-10, -10, 50), new Vector(0, 0, -2)).setNarrowBeam(3) //
                         .setKl(0.0004).setKq(0.0000006),
-                new DirectionalLight(new Color(255,0,0), new Vector(-10,7,-10)),
-                new PointLight(new Color(255, 172, 75), new Point(-30, 10, 15)).setKl(0.02).setKq(0.0004));
+//                new DirectionalLight(new Color(255,0,0), new Vector(0,0,5))
+                new DirectionalLight(new Color(255,0,0), new Vector(10,-7,-25)),
+                new PointLight(new Color(255, 172, 75), new Point(-20, -5, 15)).setKl(0.0002).setKq(0.000004)
+        );
 
         scene.geometries.add(pyramid, sphere, plane, poly, pyramid2);
 
@@ -92,6 +91,7 @@ public class FullRender {
                 .moveY(20)//
                 .renderImage() //
                 .writeToImage();
+
 
         camera.setImageWriter(new ImageWriter("original3", 500, 500)) //
                 .setRayTracer(new RayTracerBasic(scene))
@@ -124,12 +124,13 @@ public class FullRender {
                 .renderImage() //
                 .writeToImage();
 
-        Camera camera2= new Camera(sph, new Vector(0,1,0), new Vector(0,0,1)).setVPSize(50,50).setVPDistance(50);
+        /*
+        Camera camera2= new Camera(sph, new Vector(0,1,0), new Vector(0,0,1)).setVPSize(50,50).setVPDistance(25);
         camera2.setImageWriter(new ImageWriter("original7", 500, 500)) //
                 .setRayTracer(new RayTracerBasic(scene))
                 .renderImage() //
                 .writeToImage();
-
+        */
 
     }
 
