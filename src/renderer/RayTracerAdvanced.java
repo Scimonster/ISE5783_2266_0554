@@ -3,10 +3,17 @@ package renderer;
 import geometries.Intersectable;
 import primitives.*;
 import scene.Scene;
+import geometries.Intersectable.GeoPoint;
 
+import java.util.LinkedList;
 import java.util.List;
 
+
 public class RayTracerAdvanced extends RayTracerBasic {
+
+    private int sampleSize=81;
+    private int distance=100;
+
 
     /**
      * Init a ray tracer
@@ -15,6 +22,28 @@ public class RayTracerAdvanced extends RayTracerBasic {
     public RayTracerAdvanced(Scene scene)
     {
         super(scene);
+    }
+
+    /**
+     * setter for sample size
+     * @param samp
+     * @return
+     */
+    public RayTracerAdvanced setSampleSize(int samp)
+    {
+        sampleSize=samp;
+        return this;
+    }
+
+    /**
+     * setter for distance
+     * @param dist
+     * @return
+     */
+    public RayTracerAdvanced setDistance(int dist)
+    {
+        distance=dist;
+        return this;
     }
 
 
@@ -28,19 +57,20 @@ public class RayTracerAdvanced extends RayTracerBasic {
         Double3 kr = mat.kR, kkr = k.product(kr);
         if (!kkr.lowerThan(MIN_CALC_COLOR_K)) {
             Vector n = gp.geometry.getNormal(gp.point);
-            List<Ray> reflectedRays = constructReflectedRays(n, gp.point, inRay);
+            List<Ray> reflectedRays = constructReflectedRays(n, gp, inRay);
+            int superSampleCount = reflectedRays.size();
 
             for (Ray reflectedRay:reflectedRays) {
                 Intersectable.GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
                 if (reflectedPoint != null)
-                    color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
+                    color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr).reduce(superSampleCount));
             }
         }
 
         // refraction
         Double3 kt = mat.kT, kkt = k.product(kt);
         if (!kkt.lowerThan(MIN_CALC_COLOR_K)) {
-            List<Ray>  refractedRays = constructRefractedRays(gp.point, inRay);
+            List<Ray>  refractedRays = constructRefractedRays(gp, inRay);
             for(Ray refractedRay:refractedRays) {
                 Intersectable.GeoPoint refractedPoint = findClosestIntersection(refractedRay);
                 if (refractedPoint != null)
@@ -51,15 +81,114 @@ public class RayTracerAdvanced extends RayTracerBasic {
         return color;
     }
 
-    protected List<Ray> constructReflectedRays(Vector n, Point point, Ray inRay)
+    /**
+     * method to construct reflected rays
+     * @param n
+     * @param gp
+     * @param inRay
+     * @return list of rays
+     */
+    protected List<Ray> constructReflectedRays(Vector n, GeoPoint gp, Ray inRay)
     {
-        return List.of(constructReflectedRay(n,point,inRay));
+
+        double side_size = gp.geometry.getMaterial().nGlossiness;
+
+        Ray reflected=constructReflectedRay(n, gp.point, inRay);
+
+        if(Util.isZero(side_size)) {
+            return List.of(reflected);
+        }
+
+        return constructRays(side_size, reflected, inRay);
     }
 
-    protected List<Ray> constructRefractedRays(Point point, Ray inRay)
+    /**
+     * method to construct refracted rays
+     * @param gp
+     * @param inRay
+     * @return list of rays
+     */
+
+    protected List<Ray> constructRefractedRays(GeoPoint gp, Ray inRay)
     {
-        return List.of(constructRefractedRay(point, inRay));
+        return List.of(constructRefractedRay(gp.point, inRay));
     }
+
+
+    /**
+     * construct a stam amount of rays
+     * @param side_size
+     * @param toRay
+     * @param inRay
+     * @return
+     */
+    private List<Ray> constructRays(double side_size, Ray toRay, Ray inRay) {
+        List<Ray> rays = new LinkedList<>();
+        rays.add(toRay); // start with original ray
+
+        // Jitter algorithm
+        // Divide into segments (based on sample size), then randomly distribute rays within each segment
+
+        int segments_per_side = (int) Math.round(Math.log10(this.sampleSize)/Math.log10(5));
+
+        int rays_per_segment = Math.round(this.sampleSize / (segments_per_side * segments_per_side));
+
+        Point vpCenter = toRay.getPoint(this.distance);
+
+        // Get coordinate system for our viewplane
+        Vector xAxis = toRay.getDir().crossProduct(inRay.getDir()).normalize();
+        Vector yAxis = toRay.getDir().crossProduct(xAxis).normalize();
+        Point topLeft = vpCenter.add(xAxis.scale(-side_size/2.0)).add(yAxis.scale(-side_size/2.0));
+
+        // Divide the view plane into segments
+        double segment_size = (double) side_size / segments_per_side;
+
+
+        for (int i = 0; i < segments_per_side; i++) {
+            for (int j = 0; j < segments_per_side; j++) {
+                // Determine the starting point of the current segment
+                double segment_start_x = i * segment_size;
+                double segment_start_y = j * segment_size;
+
+                for (int k = 0; k < rays_per_segment; k++) {
+                    // Calculate the position of the ray within the segment
+                    double ray_x = segment_start_x + (Math.random() * segment_size);
+                    double ray_y = segment_start_y + (Math.random() * segment_size);
+
+
+                    //get the pixel coordinate point
+//                    double yI = -(ray_y - ((side_size - 1.0) / 2.0));
+//                    double xJ = (ray_x - ((side_size - 1.0) / 2.0));
+                    Point pIJ = topLeft;
+
+                    //shifting Pij properly
+                    if (!Util.isZero(ray_x)) {
+                        pIJ = pIJ.add(xAxis.scale(ray_x));
+                    }
+                    if (!Util.isZero(ray_y)) {
+                        pIJ = pIJ.add(yAxis.scale(ray_y));
+                    }
+
+                    //the direction vector
+                    Vector vIJ = pIJ.subtract(toRay.getP0());
+
+
+                    Ray cur = new Ray(toRay.getP0(), vIJ);
+
+
+                    //don't add our original ray twice
+                    if (!cur.equals(toRay)) {
+                        rays.add(cur);
+                    }
+
+                }
+            }
+        }
+
+        return rays;
+
+    }
+
 
 
 

@@ -11,7 +11,7 @@ public class Material {
      */
     public Double3 kD=Double3.ZERO, kS=Double3.ZERO, kT=Double3.ZERO, kR=Double3.ZERO;
 
-    public int nShininess=0;
+    public double nShininess=0, nGlossiness=0;
 
 
     /**
@@ -76,6 +76,19 @@ public class Material {
         this.nShininess = nShininess;
         return this;
     }
+
+    /**
+     * set nGlossiness
+     * @param nGlossiness
+     * @return
+     */
+    public Material setGlossiness(double nGlossiness)
+    {
+        this.nGlossiness=nGlossiness;
+        return this;
+    }
+
+
 
     /**
      * set transparency coefficient

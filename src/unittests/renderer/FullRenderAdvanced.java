@@ -59,7 +59,7 @@ public class FullRenderAdvanced {
         Geometries pyramid2 = new Geometries(t11, t22, t33, t44, square1);
 
 
-        Geometry plane = new Plane(new Point(0,0,-50), new Vector(0,0.5,4)).setMaterial(new Material().setKr(0.7).setShininess(50)).setEmission(new Color(0,62,0));
+        Geometry plane = new Plane(new Point(0,0,-50), new Vector(0,0.5,4)).setMaterial(new Material().setKr(0.7).setShininess(0).setGlossiness(2)).setEmission(new Color(0,62,0));
 
         Geometry poly=new Polygon(new Point(-10,-5,60), new Point(10,-5,60), new Point(5,10,60), new Point(-5,10,60)).setMaterial(new Material().setKt(0.3)).setEmission(new Color(255,16, 200));
 
@@ -85,50 +85,51 @@ public class FullRenderAdvanced {
 
         scene.setAmbientLight(new AmbientLight(Color.WHITE, 0.15));
 
-        camera.setImageWriter(new ImageWriter("original2.1", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene)) //
+        camera.setImageWriter(new ImageWriter("original2.1.1", 500, 500)) //
+                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81)) //
                 .renderImage() //
                 .writeToImage();
 
 
-        camera.setImageWriter(new ImageWriter("original2.2", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene))
-                .moveX(10)
-                .moveY(20)//
-                .renderImage() //
-                .writeToImage();
-
-
-        camera.setImageWriter(new ImageWriter("original2.3", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene))
-                .moveZ(20)
-                .rotateByRight(30)//
-                .renderImage() //
-                .writeToImage();
-
-        camera.setImageWriter(new ImageWriter("original2.4", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene))
-                .moveZ(20)
-                .rotateByRight(10)
-                .moveY(20)//
-                .renderImage() //
-                .writeToImage();
-
-        camera.setImageWriter(new ImageWriter("original2.5", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene))
-                .moveZ(20)
-                .rotateByRight(-50)
-                .moveY(-20)//
-                .renderImage() //
-                .writeToImage();
-
-        camera.setImageWriter(new ImageWriter("original2.6", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene))
-                .moveZ(-10)
-                .rotateByRight(-10)
-                .rotateByUp(30)//
-                .renderImage() //
-                .writeToImage();
+//
+//        camera.setImageWriter(new ImageWriter("original2.2", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene))
+//                .moveX(10)
+//                .moveY(20)//
+//                .renderImage() //
+//                .writeToImage();
+//
+//
+//        camera.setImageWriter(new ImageWriter("original2.3", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene))
+//                .moveZ(20)
+//                .rotateByRight(30)//
+//                .renderImage() //
+//                .writeToImage();
+//
+//        camera.setImageWriter(new ImageWriter("original2.4", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene))
+//                .moveZ(20)
+//                .rotateByRight(10)
+//                .moveY(20)//
+//                .renderImage() //
+//                .writeToImage();
+//
+//        camera.setImageWriter(new ImageWriter("original2.5", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene))
+//                .moveZ(20)
+//                .rotateByRight(-50)
+//                .moveY(-20)//
+//                .renderImage() //
+//                .writeToImage();
+//
+//        camera.setImageWriter(new ImageWriter("original2.6", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene))
+//                .moveZ(-10)
+//                .rotateByRight(-10)
+//                .rotateByUp(30)//
+//                .renderImage() //
+//                .writeToImage();
 
         /*
         Camera camera2= new Camera(sph, new Vector(0,1,0), new Vector(0,0,1)).setVPSize(50,50).setVPDistance(25);
