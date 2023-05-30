@@ -12,10 +12,10 @@ import geometries.Intersectable.GeoPoint;
  */
 public class RayTracerBasic extends RayTracerBase {
 
-    private static final double DELTA = 0.1;
-    private static final int MAX_CALC_COLOR_LEVEL = 10;
-    private static final Double3 INITIAL_K = Double3.ONE;
-    private static final double MIN_CALC_COLOR_K = 0.001;
+    protected static final double DELTA = 0.1;
+    protected static final int MAX_CALC_COLOR_LEVEL = 10;
+    protected static final Double3 INITIAL_K = Double3.ONE;
+    protected static final double MIN_CALC_COLOR_K = 0.001;
 
     /**
      * Init a ray tracer
@@ -46,7 +46,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param ray ray being traced
      * @return geopoint
      */
-    private GeoPoint findClosestIntersection(Ray ray)
+    protected GeoPoint findClosestIntersection(Ray ray)
     {
         List<GeoPoint> points = scene.geometries.findGeoIntersections(ray);
         GeoPoint closest = ray.findClosestGeoPoint(points); // findClosestGeoPoint knows to handle null
@@ -61,7 +61,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param k attenuation coefficient -- scaling down
      * @return color of the point
      */
-    private Color calcColor(GeoPoint gpt, Ray ray, int level, Double3 k) {
+    protected Color calcColor(GeoPoint gpt, Ray ray, int level, Double3 k) {
         if (level <= 0)
             return Color.BLACK; // no additive property
 
@@ -75,7 +75,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param ray the camera ray
      * @return color of the point after applying all effects
      */
-    private Color calcColor(GeoPoint gp, Ray ray)
+    protected Color calcColor(GeoPoint gp, Ray ray)
     {
         return calcColor(gp, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
                 .add(scene.ambient.getIntensity());
@@ -87,7 +87,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param ray the camera ray
      * @return the color of the point
      */
-    private Color calcLocalEffects(GeoPoint gp, Ray ray, Double3 k) {
+    protected Color calcLocalEffects(GeoPoint gp, Ray ray, Double3 k) {
         // start with emission light of the geometry
         Color color = gp.geometry.getEmission();
 
@@ -129,7 +129,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param nl dot product of geometry normal and light vector
      * @return diffusive coefficient
      */
-    private Double3 calcDiffusive(Material mat, double nl)
+    protected Double3 calcDiffusive(Material mat, double nl)
     {
         return mat.kD.scale(Math.abs(nl));
     }
@@ -143,7 +143,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param v camera ray
      * @return specular coefficient
      */
-    private Double3 calcSpecular(Material mat, Vector n, Vector l, double nl, Vector v)
+    protected Double3 calcSpecular(Material mat, Vector n, Vector l, double nl, Vector v)
     {
         Vector reflect=l.subtract(n.scale(2*nl));
 
@@ -161,7 +161,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param nl
      * @return if the point should be unshaded (effected by the light source) (boolean)
      */
-    private boolean unshaded(GeoPoint gp , Vector l, Vector n, LightSource light, double nl)
+    protected boolean unshaded(GeoPoint gp , Vector l, Vector n, LightSource light, double nl)
     {
         Vector lightDirection = l.scale(-1); // from point to light source
 
@@ -192,7 +192,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param k attenuation coefficient
      * @return the composite color of all the effects
      */
-    private Color calcGlobalEffects(GeoPoint gp, Ray inRay, int level, Double3 k) {
+    protected Color calcGlobalEffects(GeoPoint gp, Ray inRay, int level, Double3 k) {
         Color color = Color.BLACK; // no color
         Material mat = gp.geometry.getMaterial();
 
@@ -219,6 +219,7 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
 
+
     /**
      * Construct reflected ray from inRay bouncing off point (with normal n)
      * @param n normal to the geometry at point
@@ -226,7 +227,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param inRay ray coming in, to be reflected
      * @return reflected ray
      */
-    private Ray constructReflectedRay(Vector n, Point point, Ray inRay)
+    protected Ray constructReflectedRay(Vector n, Point point, Ray inRay)
     {
         double nl = n.dotProduct(inRay.getDir());
         Vector reflect = inRay.getDir().subtract(n.scale(2*nl));
@@ -240,7 +241,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param inRay incoming ray
      * @return "refracted" ray
      */
-    private Ray constructRefractedRay(Point point, Ray inRay)
+    protected Ray constructRefractedRay(Point point, Ray inRay)
     {
         return new Ray(point, inRay.getDir());
     }
@@ -254,7 +255,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param nl
      * @return Double3 transparency
      */
-    private Double3 transparency(GeoPoint gp , Vector l, Vector n, LightSource light, double nl)
+    protected Double3 transparency(GeoPoint gp , Vector l, Vector n, LightSource light, double nl)
     {
         Vector lightDirection = l.scale(-1); // from point to light source
 
