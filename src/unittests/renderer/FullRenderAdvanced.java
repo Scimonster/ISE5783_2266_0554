@@ -86,7 +86,7 @@ public class FullRenderAdvanced {
         scene.setAmbientLight(new AmbientLight(Color.WHITE, 0.15));
 
         camera.setImageWriter(new ImageWriter("original2.1.1", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81)) //
+                .setRayTracer(new RayTracerAdvanced(scene).setDistance(50).setSampleSize(81)) //
                 .renderImage() //
                 .writeToImage();
 

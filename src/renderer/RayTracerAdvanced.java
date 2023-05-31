@@ -71,10 +71,12 @@ public class RayTracerAdvanced extends RayTracerBasic {
         Double3 kt = mat.kT, kkt = k.product(kt);
         if (!kkt.lowerThan(MIN_CALC_COLOR_K)) {
             List<Ray>  refractedRays = constructRefractedRays(gp, inRay);
+            int superSampleCount=refractedRays.size();
+
             for(Ray refractedRay:refractedRays) {
                 Intersectable.GeoPoint refractedPoint = findClosestIntersection(refractedRay);
                 if (refractedPoint != null)
-                    color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
+                    color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt).reduce(superSampleCount));
             }
         }
 
@@ -111,7 +113,15 @@ public class RayTracerAdvanced extends RayTracerBasic {
 
     protected List<Ray> constructRefractedRays(GeoPoint gp, Ray inRay)
     {
-        return List.of(constructRefractedRay(gp.point, inRay));
+        double side_size = gp.geometry.getMaterial().nDiffusive;
+        Ray refracted=constructRefractedRay(gp.point, inRay);
+
+        if(Util.isZero(side_size))
+        {
+            return List.of(refracted);
+        }
+
+        return constructRays(side_size, refracted, inRay);
     }
 
 
@@ -120,7 +130,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * @param side_size
      * @param toRay
      * @param inRay
-     * @return
+     * @return list of rays
      */
     private List<Ray> constructRays(double side_size, Ray toRay, Ray inRay) {
         List<Ray> rays = new LinkedList<>();

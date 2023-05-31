@@ -11,7 +11,7 @@ public class Material {
      */
     public Double3 kD=Double3.ZERO, kS=Double3.ZERO, kT=Double3.ZERO, kR=Double3.ZERO;
 
-    public double nShininess=0, nGlossiness=0;
+    public double nShininess=0, nGlossiness=0, nDiffusive=0;
 
 
     /**
@@ -85,6 +85,17 @@ public class Material {
     public Material setGlossiness(double nGlossiness)
     {
         this.nGlossiness=nGlossiness;
+        return this;
+    }
+
+    /**
+     * set nDiffusive
+     * @param n
+     * @return
+     */
+    public Material nDiffusive(double nDiffusive)
+    {
+        this.nDiffusive=nDiffusive;
         return this;
     }
 
