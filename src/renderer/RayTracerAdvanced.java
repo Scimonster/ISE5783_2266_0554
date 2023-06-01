@@ -146,8 +146,9 @@ public class RayTracerAdvanced extends RayTracerBasic {
         Point vpCenter = toRay.getPoint(this.distance);
 
         // Get coordinate system for our viewplane
-        Vector xAxis = toRay.getDir().crossProduct(inRay.getDir()).normalize();
-        Vector yAxis = toRay.getDir().crossProduct(xAxis).normalize();
+        List<Vector> orthogonal = toRay.getDir().getOrthogonalVectors();
+        Vector xAxis = orthogonal.get(0),
+               yAxis = orthogonal.get(1);
         Point topLeft = vpCenter.add(xAxis.scale(-side_size/2.0)).add(yAxis.scale(-side_size/2.0));
 
         // Divide the view plane into segments

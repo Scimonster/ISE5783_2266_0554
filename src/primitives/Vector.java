@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * Class of a vector, inherits from point.
  * Vectors start at the origin and end at the point.
@@ -109,5 +111,25 @@ public class Vector extends Point {
     @Override
     public boolean equals(Object obj) {
         return (obj instanceof Vector && super.equals(obj));
+    }
+
+    /**
+     * Generate two orthogonal vectors to the vector, eg for using as an axis definition
+     * @return list of two orthonormal vectors
+     */
+    public List<Vector> getOrthogonalVectors()
+    {
+        Vector v0 = this.normalize();
+        Vector v1, v2;
+        // arbitrarily pick a field to set to zero
+        if (Util.isZero(v0.getX())) {
+            // take an arbitrary orthogonal vector
+            v1 = new Vector(1, 0, 0);
+        } else {
+            // take a non-parallel vector, and get an orthogonal vector to the original
+            v1 = new Vector(0, 1, 0).crossProduct(v0).normalize();
+        }
+        v2 = v0.crossProduct(v1);
+        return List.of(v1, v2);
     }
 }

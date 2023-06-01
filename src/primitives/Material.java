@@ -93,7 +93,7 @@ public class Material {
      * @param n
      * @return
      */
-    public Material nDiffusive(double nDiffusive)
+    public Material setDiffusive(double nDiffusive)
     {
         this.nDiffusive=nDiffusive;
         return this;

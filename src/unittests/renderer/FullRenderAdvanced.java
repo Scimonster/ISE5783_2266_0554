@@ -6,10 +6,7 @@ import lighting.DirectionalLight;
 import lighting.PointLight;
 import lighting.SpotLight;
 import org.junit.jupiter.api.Test;
-import primitives.Color;
-import primitives.Material;
-import primitives.Point;
-import primitives.Vector;
+import primitives.*;
 import renderer.Camera;
 import renderer.ImageWriter;
 import renderer.RayTracerAdvanced;
@@ -59,7 +56,7 @@ public class FullRenderAdvanced {
         Geometries pyramid2 = new Geometries(t11, t22, t33, t44, square1);
 
 
-        Geometry plane = new Plane(new Point(0,0,-50), new Vector(0,0.5,4)).setMaterial(new Material().setKr(0.7).setShininess(0).setGlossiness(2)).setEmission(new Color(0,62,0));
+        Geometry plane = new Plane(new Point(0,0,-50), new Vector(0,1,4)).setMaterial(new Material().setKr(0.7).setShininess(0).setGlossiness(2)).setEmission(new Color(0,62,0));
 
         Geometry poly=new Polygon(new Point(-10,-5,60), new Point(10,-5,60), new Point(5,10,60), new Point(-5,10,60)).setMaterial(new Material().setKt(0.3)).setEmission(new Color(255,16, 200));
 
@@ -140,4 +137,40 @@ public class FullRenderAdvanced {
         */
 
     }
+
+    /** Produce a picture of a sphere lighted by a spot light */
+    @Test
+    public void twoSpheresOnMirrors() {
+        Camera camera = new Camera(new Point(0, 0, 10000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+                .setVPSize(2500, 2500).setVPDistance(10000); //
+
+        Scene scene = new Scene("Test scene");
+
+        scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
+
+        scene.geometries.add( //
+                new Sphere(new Point(-950, -900, -1000), 400d).setEmission(new Color(0, 50, 100)) //
+                        .setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20)
+                                .setKt(new Double3(0.5, 0, 0)).setDiffusive(2.5)),
+                new Sphere(new Point(-950, -900, -1000), 200d).setEmission(new Color(100, 50, 20)) //
+                        .setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20)),
+                new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
+                        new Point(670, 670, 3000)) //
+                        .setEmission(new Color(20, 20, 20)) //
+                        .setMaterial(new Material().setKr(1).setGlossiness(2.5)),
+                new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
+                        new Point(-1500, -1500, -2000)) //
+                        .setEmission(new Color(20, 20, 20)) //
+                        .setMaterial(new Material().setKr(new Double3(0.5, 0, 0.4))));
+
+        scene.lights.add(new SpotLight(new Color(1020, 400, 400), new Point(-750, -750, -150), new Vector(-1, -1, -4)) //
+                .setKl(0.00001).setKq(0.000005));
+
+        ImageWriter imageWriter = new ImageWriter("reflectionTwoSpheresMirroredImproved", 500, 500);
+        camera.setImageWriter(imageWriter) //
+                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81)) //
+                .renderImage() //
+                .writeToImage();
+    }
+
 }
