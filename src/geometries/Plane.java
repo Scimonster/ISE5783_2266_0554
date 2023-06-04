@@ -90,7 +90,14 @@ public class Plane extends Geometry{
 
 
 
-        return List.of(new GeoPoint(this, ray.getPoint(t)));
+        //floating point exception can still occur
+        try {
+            return List.of(new GeoPoint(this, ray.getPoint(t)));
+        }
+        catch (IllegalArgumentException n)
+        {
+            return List.of(new GeoPoint(this, ray.getP0()));
+        }
     }
 
     @Override

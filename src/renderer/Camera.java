@@ -157,11 +157,15 @@ public class Camera {
         //shifting Pij properly
         if (!Util.isZero(xJ))
         {
-            pIJ=pIJ.add(this.vRight.scale(xJ));
+            try {
+                pIJ = pIJ.add(this.vRight.scale(xJ));
+            } catch (IllegalArgumentException n){}
         }
         if (!Util.isZero(yI))
         {
-            pIJ=pIJ.add(this.vUp.scale(yI));
+            try {
+                pIJ = pIJ.add(this.vUp.scale(yI));
+            }catch (IllegalArgumentException n){}
         }
 
         //the direction vector
@@ -281,8 +285,9 @@ public class Camera {
 
     /**
      * Rotate a vector using the standard rotation matrix -- representation is based on interpretation
-     * @param v vector to rotate
-     * @param theta angle to rotate
+     * @param v1 vector to rotate by
+     * @param v2 vector to rotate by
+     * @param deg angle to rotate
      * @return rotated vector
      */
     private Vector rotateVector(Vector v1, Vector v2, double deg)

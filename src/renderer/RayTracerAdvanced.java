@@ -93,7 +93,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
     protected List<Ray> constructReflectedRays(Vector n, GeoPoint gp, Ray inRay)
     {
 
-        double side_size = gp.geometry.getMaterial().nGlossiness;
+        double side_size = inRay.findDistance(gp.point)*gp.geometry.getMaterial().nGlossiness;
 
         Ray reflected=constructReflectedRay(n, gp.point, inRay);
 
@@ -101,7 +101,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
             return List.of(reflected);
         }
 
-        return constructRays(side_size, reflected, inRay);
+        return constructRays(side_size, reflected);
     }
 
     /**
@@ -113,7 +113,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
 
     protected List<Ray> constructRefractedRays(GeoPoint gp, Ray inRay)
     {
-        double side_size = gp.geometry.getMaterial().nDiffusive;
+        double side_size = inRay.findDistance(gp.point)*gp.geometry.getMaterial().nDiffusive;
         Ray refracted=constructRefractedRay(gp.point, inRay);
 
         if(Util.isZero(side_size))
@@ -121,7 +121,7 @@ public class RayTracerAdvanced extends RayTracerBasic {
             return List.of(refracted);
         }
 
-        return constructRays(side_size, refracted, inRay);
+        return constructRays(side_size, refracted);
     }
 
 
@@ -129,12 +129,16 @@ public class RayTracerAdvanced extends RayTracerBasic {
      * construct a stam amount of rays
      * @param side_size
      * @param toRay
-     * @param inRay
      * @return list of rays
      */
-    private List<Ray> constructRays(double side_size, Ray toRay, Ray inRay) {
+    private List<Ray> constructRays(double side_size, Ray toRay) {
         List<Ray> rays = new LinkedList<>();
         rays.add(toRay); // start with original ray
+
+        if(this.sampleSize<5)
+        {
+            return rays;
+        }
 
         // Jitter algorithm
         // Divide into segments (based on sample size), then randomly distribute rays within each segment
@@ -143,16 +147,14 @@ public class RayTracerAdvanced extends RayTracerBasic {
 
         int rays_per_segment = Math.round(this.sampleSize / (segments_per_side * segments_per_side));
 
-        Point vpCenter = toRay.getPoint(this.distance);
-
         // Get coordinate system for our viewplane
         List<Vector> orthogonal = toRay.getDir().getOrthogonalVectors();
         Vector xAxis = orthogonal.get(0),
                yAxis = orthogonal.get(1);
-        Point topLeft = vpCenter.add(xAxis.scale(-side_size/2.0)).add(yAxis.scale(-side_size/2.0));
+        Point pC=toRay.getPoint(this.distance);
 
         // Divide the view plane into segments
-        double segment_size = (double) side_size / segments_per_side;
+        double segment_size = side_size / segments_per_side;
 
 
         for (int i = 0; i < segments_per_side; i++) {
@@ -168,16 +170,20 @@ public class RayTracerAdvanced extends RayTracerBasic {
 
 
                     //get the pixel coordinate point
-//                    double yI = -(ray_y - ((side_size - 1.0) / 2.0));
-//                    double xJ = (ray_x - ((side_size - 1.0) / 2.0));
-                    Point pIJ = topLeft;
+                   double yI = -(ray_y - ((side_size - 1.0) / 2.0));
+                   double xJ = (ray_x - ((side_size - 1.0) / 2.0));
+                    Point pIJ = pC;
 
                     //shifting Pij properly
                     if (!Util.isZero(ray_x)) {
-                        pIJ = pIJ.add(xAxis.scale(ray_x));
+                        try {
+                            pIJ = pIJ.add(xAxis.scale(xJ));
+                        }catch(IllegalArgumentException n){}
                     }
                     if (!Util.isZero(ray_y)) {
-                        pIJ = pIJ.add(yAxis.scale(ray_y));
+                        try {
+                            pIJ = pIJ.add(yAxis.scale(yI));
+                        }catch(IllegalArgumentException n){}
                     }
 
                     //the direction vector

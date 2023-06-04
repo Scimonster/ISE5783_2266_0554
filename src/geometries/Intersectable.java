@@ -77,13 +77,13 @@ public abstract class Intersectable {
      */
     public List<GeoPoint> findGeoIntersections(Ray ray)
     {
-        try {
+        //try {
             return this.findGeoIntersectionsHelper(ray, Double.POSITIVE_INFINITY);
-        } catch (IllegalArgumentException n)
-        {
+        //} catch (IllegalArgumentException n)
+        //{
             //assume no intersections because of zero vector, return null
-            return null;
-        }
+           // return null;
+        //}
     }
 
     /**
@@ -95,12 +95,12 @@ public abstract class Intersectable {
 
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance)
     {
-        try {
+        //try {
             return this.findGeoIntersectionsHelper(ray, maxDistance);
-        } catch (IllegalArgumentException e) {
+            //} catch (IllegalArgumentException e) {
             // zero vector, assume that means no intersection
-            return null;
-        }
+            //return null;
+        //}
     }
 
 }

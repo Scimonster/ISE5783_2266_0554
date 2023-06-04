@@ -74,7 +74,12 @@ public class Ray {
             return this.p0;
         }
         else {
-            return this.p0.add(this.dir.scale(_t));
+            try {
+                return this.p0.add(this.dir.scale(_t));
+            } catch (IllegalArgumentException n)
+            {
+                return this.p0;
+            }
         }
     }
 
@@ -125,5 +130,15 @@ public class Ray {
     public Point findClosestPoint(List<Point> points) {
         return points == null || points.isEmpty() ? null
                 : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
+    }
+
+    /**
+     * method that returns the distance between p0 and the point passed
+     * @param point
+     * @return double distance
+     */
+    public double findDistance(Point point)
+    {
+        return this.p0.distance(point);
     }
 }
