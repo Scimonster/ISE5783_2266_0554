@@ -10,10 +10,8 @@ import java.util.List;
 
 
 public class RayTracerAdvanced extends RayTracerBasic {
-
     private int sampleSize=81;
     private int distance=100;
-
 
     /**
      * Init a ray tracer
@@ -205,9 +203,5 @@ public class RayTracerAdvanced extends RayTracerBasic {
         return rays;
 
     }
-
-
-
-
 
 }

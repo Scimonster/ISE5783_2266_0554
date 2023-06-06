@@ -56,17 +56,17 @@ public class FullRenderAdvanced {
         Geometries pyramid2 = new Geometries(t11, t22, t33, t44, square1);
 
 
-        Geometry plane = new Plane(new Point(0,0,-50), new Vector(0,1,4)).setMaterial(new Material().setKr(0.7).setShininess(0).setGlossiness(0.02)).setEmission(new Color(0,62,0));
+        Geometry plane = new Plane(new Point(0,0,-50), new Vector(0,1,4)).setMaterial(new Material().setKt(1).setShininess(0).setDiffusive(0.02)).setEmission(Color.BLACK);
 
         Geometry poly=new Polygon(new Point(-10,-5,60), new Point(10,-5,60), new Point(5,10,60), new Point(-5,10,60)).setMaterial(new Material().setKt(0.3)).setEmission(new Color(255,16, 200));
 
 
         //sphere
         Point sph = new Point(0,10, 0);
-        Geometry sphere= new Sphere(sph, 10d).setMaterial(mat.setShininess(20).setKt(0.1)).setEmission(Color.BLUE);
+        Geometry sphere= new Sphere(sph, 10d).setMaterial(mat.setShininess(20).setKr(0.1).setGlossiness(0.04)).setEmission(Color.BLUE);
 
 
-        Camera camera=new Camera(new Point(-20,-10,75), new Vector(0,0,-1), new Vector(0,1,0)).setVPSize(50,50).setVPDistance(50);
+        Camera camera=new Camera(new Point(-20,-10,75), new Vector(0,0,-1), new Vector(0,1,0)).setVPSize(50,50).setVPDistance(50).setThreading(true);
 
         Scene scene=new Scene("original");
 
@@ -82,7 +82,15 @@ public class FullRenderAdvanced {
 
         scene.setAmbientLight(new AmbientLight(Color.WHITE, 0.15));
 
-        camera.setImageWriter(new ImageWriter("original2.1.1", 500, 500)) //
+        Camera camera2= new Camera(new Point(0,0,-100), new Vector(0,0,1), new Vector(0,1,0)).setVPSize(50,50).setVPDistance(25).setThreading(true);
+        camera2.setImageWriter(new ImageWriter("original2.7", 500, 500)) //
+                .setRayTracer(new RayTracerAdvanced(scene).setSampleSize(81).setDistance(100))
+                .renderImage() //
+                .writeToImage();
+
+
+
+        camera.setImageWriter(new ImageWriter("original2.1", 500, 500)) //
                 .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81)) //
                 .renderImage() //
                 .writeToImage();
@@ -128,13 +136,8 @@ public class FullRenderAdvanced {
                 .renderImage() //
                 .writeToImage();
 
-        /*
-        Camera camera2= new Camera(sph, new Vector(0,1,0), new Vector(0,0,1)).setVPSize(50,50).setVPDistance(25);
-        camera2.setImageWriter(new ImageWriter("original7", 500, 500)) //
-                .setRayTracer(new RayTracerBasic(scene))
-                .renderImage() //
-                .writeToImage();
-        */
+
+
 
     }
 
@@ -142,7 +145,7 @@ public class FullRenderAdvanced {
     @Test
     public void twoSpheresOnMirrors() {
         Camera camera = new Camera(new Point(0, 0, 10000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-                .setVPSize(2500, 2500).setVPDistance(10000); //
+                .setVPSize(2500, 2500).setVPDistance(10000).setThreading(true); //
 
         Scene scene = new Scene("Test scene");
 
@@ -173,5 +176,9 @@ public class FullRenderAdvanced {
                 .writeToImage();
     }
 
+
 }
+
+
+
 

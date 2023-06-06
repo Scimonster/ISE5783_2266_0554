@@ -2,6 +2,8 @@ package renderer;
 import primitives.*;
 
 import java.util.MissingResourceException;
+import java.util.stream.IntStream;
+
 
 public class Camera {
     private Point location;
@@ -11,6 +13,19 @@ public class Camera {
 
     private ImageWriter iw;
     private RayTracerBase rayTracer;
+
+    private Boolean threading=false;
+
+    /**
+     * setter for threading
+     * @param val
+     * @return
+     */
+    public Camera setThreading(boolean val)
+    {
+        this.threading=val;
+        return this;
+    }
 
     /**
      * construct the camera, by passing its location point and 2 vectors, that must be orthogonal
@@ -194,12 +209,32 @@ public class Camera {
         Ray cameraRay;
         Color pixelColor;
 
-        // loop over all x, y values, print the grid lines
-        for (int j = 0; j < iw.getNx(); j++) {
-            for (int i = 0; i < iw.getNy(); i++) {
-                cameraRay = this.constructRay(iw.getNx(), iw.getNy(), j, i);
-                pixelColor = this.rayTracer.traceRay(cameraRay);
-                this.iw.writePixel(j, i, pixelColor);
+        if(this.threading)
+        {
+            Pixel.initialize(iw.getNx(), iw.getNy(), 100l);
+            IntStream.range(0, iw.getNx()).parallel().forEach(j -> {
+                IntStream.range(0, iw.getNy()).parallel().forEach(i -> {
+                    this.iw.writePixel(j,i, this.rayTracer.traceRay(this.constructRay(iw.getNx(), iw.getNy(), j,i)));
+                    Pixel.pixelDone();
+                    Pixel.printPixel();
+                });
+            });
+        }
+        else {
+            Pixel.initialize(this.iw.getNy(), this.iw.getNx(), 100l);
+            for (int i = 0; i < this.iw.getNy(); ++i)
+                for (int j = 0; j < this.iw.getNx(); ++j) {
+                    this.iw.writePixel(j,i, this.rayTracer.traceRay(this.constructRay(iw.getNx(), iw.getNy(), j,i)));
+                    Pixel.pixelDone();
+                    Pixel.printPixel();
+                //}
+//            // loop over all x, y values, print the grid lines
+//            for (int j = 0; j < iw.getNx(); j++) {
+//                for (int i = 0; i < iw.getNy(); i++) {
+//                    cameraRay = this.constructRay(iw.getNx(), iw.getNy(), j, i);
+//                    pixelColor = this.rayTracer.traceRay(cameraRay);
+//                    this.iw.writePixel(j, i, pixelColor);
+                //}
             }
         }
         return this;
