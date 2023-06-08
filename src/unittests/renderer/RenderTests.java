@@ -43,6 +43,19 @@ public class RenderTests {
       camera.renderImage();
       camera.printGrid(100, new Color(YELLOW));
       camera.writeToImage();
+
+      /*
+      Camera camera2 = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+              .setVPDistance(100) //
+              .setVPSize(500, 500) //
+              .setImageWriter(new ImageWriter("base render test 2", 1000, 1000))
+              .setRayTracer(new RayTracerAdvanced(scene).setSampleSize(81))
+              .setThreading(true);
+
+      camera2.renderImage();
+      camera2.printGrid(100, new Color(YELLOW));
+      camera2.writeToImage();
+       */
    }
 
    // For stage 6 - please disregard in stage 5
