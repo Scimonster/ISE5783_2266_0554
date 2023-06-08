@@ -219,8 +219,9 @@ public class RayTracerBasic extends RayTracerBase {
             for (Ray reflectedRay:reflectedRays) {
                 Intersectable.GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
                 if (reflectedPoint != null)
-                    color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr).reduce(superSampleCount));
+                    color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr));
             }
+            color = color.scale(kr).reduce(superSampleCount);
         }
 
         // refraction
@@ -232,8 +233,9 @@ public class RayTracerBasic extends RayTracerBase {
             for(Ray refractedRay:refractedRays) {
                 Intersectable.GeoPoint refractedPoint = findClosestIntersection(refractedRay);
                 if (refractedPoint != null)
-                    color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt).reduce(superSampleCount));
+                    color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt));
             }
+            color = color.scale(kt).reduce(superSampleCount);
         }
 
         return color;

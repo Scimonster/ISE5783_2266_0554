@@ -140,21 +140,9 @@ public class RayTracerAdvanced extends RayTracerBasic {
 
 
                     //get the pixel coordinate point
-                   double yI = -(ray_y - ((height - 1.0) / 2.0));
-                   double xJ = (ray_x - ((width - 1.0) / 2.0));
-                    Point pIJ = pC;
-
-                    //shifting Pij properly
-                    if (!Util.isZero(ray_x)) {
-                        try {
-                            pIJ = pIJ.add(xAxis.scale(xJ));
-                        }catch(IllegalArgumentException n){}
-                    }
-                    if (!Util.isZero(ray_y)) {
-                        try {
-                            pIJ = pIJ.add(yAxis.scale(yI));
-                        }catch(IllegalArgumentException n){}
-                    }
+                    double yI = -(ray_y - ((height - 1.0) / 2.0));
+                    double xJ = (ray_x - ((width - 1.0) / 2.0));
+                    Point pIJ = pC.addScaled(xAxis, xJ).addScaled(yAxis, yI);
 
                     //the direction vector
                     Vector vIJ = pIJ.subtract(toRay.getP0());

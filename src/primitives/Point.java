@@ -94,5 +94,23 @@ public class Point {
         return xyz.d3;
     }
 
+    /**
+     * function that scales a point
+     * @param v
+     * @param k
+     * @return
+     */
+    public Point addScaled(Vector v, double k)
+    {
+        if (!Util.isZero(k)) {
+            try {
+                return this.add(v.scale(k));
+            } catch (IllegalArgumentException n) {
+                // shrunk to zero vector
+            }
+        }
+        return this;
+    }
+
 
 }

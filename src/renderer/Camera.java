@@ -170,18 +170,7 @@ public class Camera {
         Point pIJ = pC;
 
         //shifting Pij properly
-        if (!Util.isZero(xJ)) {
-            try {
-                pIJ = pIJ.add(this.vRight.scale(xJ));
-            } catch (IllegalArgumentException n) {
-            }
-        }
-        if (!Util.isZero(yI)) {
-            try {
-                pIJ = pIJ.add(this.vUp.scale(yI));
-            } catch (IllegalArgumentException n) {
-            }
-        }
+        pIJ = pIJ.addScaled(this.vRight, xJ).addScaled(this.vUp, yI);
 
         //the direction vector
         Vector vIJ = pIJ.subtract(this.location);
