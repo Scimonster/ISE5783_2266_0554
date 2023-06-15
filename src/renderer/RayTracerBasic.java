@@ -28,7 +28,7 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
 
-    private Color traceRay(Ray ray)
+    public Color traceRay(Ray ray)
     {
         GeoPoint closest = findClosestIntersection(ray);
 
@@ -42,17 +42,7 @@ public class RayTracerBasic extends RayTracerBase {
         return this.calcColor(closest, ray);
     }
 
-    @Override
-    public Color traceRay(List<Ray> rays)
-    {
-        int superSampleCount = rays.size();
-        Color color = Color.BLACK;
-        for (Ray ray: rays)
-        {
-            color = color.add(traceRay(ray).reduce(superSampleCount));
-        }
-        return color;
-    }
+
 
     /**
      * Find the closest intersection point on a ray

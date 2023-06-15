@@ -1,5 +1,8 @@
 package primitives;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Util class is used for some internal utilities, e.g. controlling accuracy
  * 
@@ -67,6 +70,34 @@ public abstract class Util {
 	 */
 	public static double random(double min, double max) {
 		return Math.random() * (max - min) + min;
+	}
+
+	//helper methods, some aren't really necessary but i did it because why not and it saves on duplication of code
+	/**
+	 * if the list is null, init a list and return it, otherwise return existing list
+	 * @param list - list to check
+	 * @return - list
+	 */
+	public static <T>List<T> initListIfNull(List<T> list){
+		return list == null ? new LinkedList<>() : list;
+	}
+
+	/**
+	 * Like the C# version, returns true if list is null or empty
+	 * @param list - list to check
+	 * @return - true if list is null or empty, false otherwise
+	 */
+	public static <T>boolean isNullOrEmpty(List<T> list){
+		return list == null || list.isEmpty();
+	}
+	/**
+	 * Is a number within the max distance (less than upper bound)
+	 * @param num - number to check (distance)
+	 * @param upperBound - maximum distance
+	 * @return true - in bounds, false - not in bounds
+	 */
+	public static boolean isInDistance(double num, double upperBound) {
+		return alignZero(num - upperBound) <= 0;
 	}
 
 }

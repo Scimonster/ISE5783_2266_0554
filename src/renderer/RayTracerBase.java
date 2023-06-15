@@ -27,7 +27,7 @@ public abstract class RayTracerBase {
      * @param ray ray from camera to scene
      * @return color of intercepted object(s)
      */
-    public abstract Color traceRay(List<Ray> rays);
+    public abstract Color traceRay(Ray ray);
 
     protected abstract List<Ray> constructRays(Ray inRay, double height, double width, double distance);
 }

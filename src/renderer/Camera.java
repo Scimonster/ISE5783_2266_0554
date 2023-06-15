@@ -220,7 +220,7 @@ public class Camera {
             Pixel.initialize(iw.getNx(), iw.getNy(), 100l);
             IntStream.range(0, iw.getNx()).parallel().forEach(j -> {
                 IntStream.range(0, iw.getNy()).parallel().forEach(i -> {
-                    this.iw.writePixel(j,i, this.rayTracer.traceRay(this.constructRays(iw.getNx(), iw.getNy(), j,i)));
+                    this.iw.writePixel(j,i, this.rayTracer.traceRay(this.constructRay(iw.getNx(), iw.getNy(), j,i)));
                     Pixel.pixelDone();
                     Pixel.printPixel();
                 });
@@ -230,7 +230,7 @@ public class Camera {
             Pixel.initialize(this.iw.getNy(), this.iw.getNx(), 100l);
             for (int i = 0; i < this.iw.getNy(); ++i)
                 for (int j = 0; j < this.iw.getNx(); ++j) {
-                    this.iw.writePixel(j,i, this.rayTracer.traceRay(this.constructRays(iw.getNx(), iw.getNy(), j,i)));
+                    this.iw.writePixel(j,i, this.rayTracer.traceRay(this.constructRay(iw.getNx(), iw.getNy(), j,i)));
                     Pixel.pixelDone();
                     Pixel.printPixel();
                 //}
