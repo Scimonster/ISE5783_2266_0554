@@ -1,6 +1,5 @@
 package renderer;
 
-import geometries.Intersectable;
 import lighting.LightSource;
 import primitives.*;
 import scene.Scene;
@@ -27,7 +26,7 @@ public class RayTracerBasic extends RayTracerBase {
         super(scene);
     }
 
-
+    @Override
     public Color traceRay(Ray ray)
     {
         GeoPoint closest = findClosestIntersection(ray);
@@ -199,60 +198,28 @@ public class RayTracerBasic extends RayTracerBase {
         Color color = Color.BLACK; // no color
         Material mat = gp.geometry.getMaterial();
 
-        /// reflection
+        // reflection
         Double3 kr = mat.kR, kkr = k.product(kr);
         if (!kkr.lowerThan(MIN_CALC_COLOR_K)) {
             Vector n = gp.geometry.getNormal(gp.point);
-            List<Ray> reflectedRays = constructReflectedRays(n, gp, inRay);
-            int superSampleCount = reflectedRays.size();
-
-            for (Ray reflectedRay:reflectedRays) {
-                Intersectable.GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
-                if (reflectedPoint != null)
-                    color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr));
-            }
-            color = color.scale(kr).reduce(superSampleCount);
+            Ray reflectedRay = constructReflectedRay(n, gp.point, inRay);
+            GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
+            if (reflectedPoint != null)
+                color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
         }
 
         // refraction
         Double3 kt = mat.kT, kkt = k.product(kt);
         if (!kkt.lowerThan(MIN_CALC_COLOR_K)) {
-            List<Ray>  refractedRays = constructRefractedRays(gp, inRay);
-            int superSampleCount=refractedRays.size();
-
-            for(Ray refractedRay:refractedRays) {
-                Intersectable.GeoPoint refractedPoint = findClosestIntersection(refractedRay);
-                if (refractedPoint != null)
-                    color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt));
-            }
-            color = color.scale(kt).reduce(superSampleCount);
+            Ray refractedRay = constructRefractedRay(gp.point, inRay);
+            GeoPoint refractedPoint = findClosestIntersection(refractedRay);
+            if (refractedPoint != null)
+                color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
         }
 
         return color;
     }
 
-    /**
-     * Construct reflected rays (override for supersampling)
-     * @param n normal
-     * @param gp geopoint
-     * @param inRay camera ray
-     * @return list of reflected rays
-     */
-    protected List<Ray> constructReflectedRays(Vector n, GeoPoint gp, Ray inRay)
-    {
-        return List.of(constructReflectedRay(n, gp.point, inRay));
-    }
-
-    /**
-     * Construct refracted rays (override for supersampling)
-     * @param gp geopoint
-     * @param inRay camera ray
-     * @return list of refracted rays
-     */
-    protected List<Ray> constructRefractedRays(GeoPoint gp, Ray inRay)
-    {
-        return List.of(constructRefractedRay(gp.point, inRay));
-    }
 
 
     /**
@@ -314,11 +281,4 @@ public class RayTracerBasic extends RayTracerBase {
         return ktr;
 
     }
-
-    @Override
-    protected List<Ray> constructRays(Ray inRay, double height, double width, double distance)
-    {
-        return List.of(inRay);
-    }
-
 }

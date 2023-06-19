@@ -5,7 +5,6 @@ import lighting.AmbientLight;
 import lighting.DirectionalLight;
 import lighting.PointLight;
 import lighting.SpotLight;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import primitives.*;
 import renderer.Camera;
@@ -14,16 +13,11 @@ import renderer.RayTracerAdvanced;
 import renderer.RayTracerBasic;
 import scene.Scene;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
-
-
 public class FullRenderAdvanced {
 
     @Test
     public void testInteresting2()
     {
-//        fail();
         //pyramid
         Point A=new Point(0,0,0),
                 B= new Point(-10,-10, -10),
@@ -150,7 +144,6 @@ public class FullRenderAdvanced {
     /** Produce a picture of a sphere lighted by a spot light */
     @Test
     public void twoSpheresOnMirrors() {
-//        fail();
         Camera camera = new Camera(new Point(0, 0, 10000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVPSize(2500, 2500).setVPDistance(10000).setThreading(true); //
 

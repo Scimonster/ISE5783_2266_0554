@@ -1,7 +1,6 @@
 package renderer;
 import primitives.*;
 
-import java.util.List;
 import java.util.MissingResourceException;
 import java.util.stream.IntStream;
 
@@ -156,44 +155,28 @@ public class Camera {
      * @param i row index (in px resolution)
      * @return the ray constructed
      */
-    public Ray constructRay(int nX, int nY, int j, int i) {
+    public Ray constructRay(int nX, int nY, int j, int i)
+    {
         //image center
-        Point pC = this.location.add(this.vTo.scale(this.distance));
+        Point pC=this.location.add(this.vTo.scale(this.distance));
 
         //get ratio of pixel size
-        double rY = this.height / nY;
-        double rX = this.width / nX;
+        double rY=this.height/nY;
+        double rX=this.width/nX;
 
         //get the pixel coordinate point
-        double yI = -(i - ((nY - 1.0) / 2.0)) * rY;
-        double xJ = (j - ((nX - 1.0) / 2.0)) * rX;
-        Point pIJ = pC;
+        double yI=-(i-((nY-1.0)/2.0))*rY;
+        double xJ=(j-((nX-1.0)/2.0))*rX;
+        Point pIJ=pC;
 
         //shifting Pij properly
         pIJ = pIJ.addScaled(this.vRight, xJ).addScaled(this.vUp, yI);
 
         //the direction vector
-        Vector vIJ = pIJ.subtract(this.location);
+        Vector vIJ=pIJ.subtract(this.location);
 
         //now that we have the start of the ray and the vector, let us return that built ray
         return new Ray(this.location, vIJ);
-    }
-
-    /**
-     * Construct list of rays at a point (supersampling will be handled by raytracer)
-     * @param nX
-     * @param nY
-     * @param j
-     * @param i
-     * @return
-     */
-    public List<Ray> constructRays(int nX, int nY, int j, int i)
-    {
-        Ray ray = this.constructRay(nX, nY, j, i);
-        //get ratio of pixel size
-        double rY = this.height / nY;
-        double rX = this.width / nX;
-        return this.rayTracer.constructRays(ray, rY, rX, this.distance);
     }
 
     /**
@@ -237,8 +220,8 @@ public class Camera {
 //            // loop over all x, y values, print the grid lines
 //            for (int j = 0; j < iw.getNx(); j++) {
 //                for (int i = 0; i < iw.getNy(); i++) {
-//                    cameraRays = this.constructRay(iw.getNx(), iw.getNy(), j, i);
-//                    pixelColor = this.rayTracer.traceRay(cameraRays);
+//                    cameraRay = this.constructRay(iw.getNx(), iw.getNy(), j, i);
+//                    pixelColor = this.rayTracer.traceRay(cameraRay);
 //                    this.iw.writePixel(j, i, pixelColor);
                 //}
             }

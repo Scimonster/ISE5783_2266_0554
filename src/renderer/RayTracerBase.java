@@ -4,8 +4,6 @@ import primitives.Color;
 import primitives.Ray;
 import scene.Scene;
 
-import java.util.List;
-
 /**
  * Base class for ray tracing
  */
@@ -28,6 +26,4 @@ public abstract class RayTracerBase {
      * @return color of intercepted object(s)
      */
     public abstract Color traceRay(Ray ray);
-
-    protected abstract List<Ray> constructRays(Ray inRay, double height, double width, double distance);
 }
