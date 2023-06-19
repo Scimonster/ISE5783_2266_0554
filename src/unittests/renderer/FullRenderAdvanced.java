@@ -56,14 +56,14 @@ public class FullRenderAdvanced {
         Geometries pyramid2 = new Geometries(t11, t22, t33, t44, square1);
 
 
-        Geometry plane = new Plane(new Point(0,0,-50), new Vector(0,1,4)).setMaterial(new Material().setKt(1).setShininess(0).setDiffusive(0.02)).setEmission(Color.BLACK);
+        Geometry plane = new Plane(new Point(0,0,-50), new Vector(0,1,4)).setMaterial(new Material().setKt(1).setShininess(0).setDiffusive(0.1)).setEmission(Color.BLACK);
 
         Geometry poly=new Polygon(new Point(-10,-5,60), new Point(10,-5,60), new Point(5,10,60), new Point(-5,10,60)).setMaterial(new Material().setKt(0.3)).setEmission(new Color(255,16, 200));
 
 
         //sphere
         Point sph = new Point(0,10, 0);
-        Geometry sphere= new Sphere(sph, 10d).setMaterial(mat.setShininess(20).setKr(0.1).setGlossiness(0.04)).setEmission(Color.BLUE);
+        Geometry sphere= new Sphere(sph, 10d).setMaterial(mat.setShininess(20).setKr(0.1).setGlossiness(0)).setEmission(Color.BLUE);
 
 
         Camera camera=new Camera(new Point(-20,-10,75), new Vector(0,0,-1), new Vector(0,1,0)).setVPSize(50,50).setVPDistance(50).setThreading(true);
@@ -84,57 +84,62 @@ public class FullRenderAdvanced {
 
         Camera camera2= new Camera(new Point(0,0,-100), new Vector(0,0,1), new Vector(0,1,0)).setVPSize(50,50).setVPDistance(25).setThreading(true);
         camera2.setImageWriter(new ImageWriter("original2.7", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene).setSampleSize(81).setDistance(100))
+                .setRayTracer(new RayTracerAdvanced(scene).setSampleSize(300).setDistance(100))
                 .renderImage() //
+                .writeToImage();
+
+        camera2.setImageWriter(new ImageWriter("original2.7 no improvement", 500,500))
+                .setRayTracer(new RayTracerAdvanced(scene).setSampleSize(0).setDistance(100))
+                .renderImage()
                 .writeToImage();
 
 
 
-        camera.setImageWriter(new ImageWriter("original2.1", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81)) //
-                .renderImage() //
-                .writeToImage();
+//        camera.setImageWriter(new ImageWriter("original2.1", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81)) //
+//                .renderImage() //
+//                .writeToImage();
 
 
 
-        camera.setImageWriter(new ImageWriter("original2.2", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
-                .moveX(10)
-                .moveY(20)//
-                .renderImage() //
-                .writeToImage();
-
-
-        camera.setImageWriter(new ImageWriter("original2.3", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
-                .moveZ(20)
-                .rotateByRight(30)//
-                .renderImage() //
-                .writeToImage();
-
-        camera.setImageWriter(new ImageWriter("original2.4", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
-                .moveZ(20)
-                .rotateByRight(10)
-                .moveY(20)//
-                .renderImage() //
-                .writeToImage();
-
-        camera.setImageWriter(new ImageWriter("original2.5", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
-                .moveZ(20)
-                .rotateByRight(-50)
-                .moveY(-20)//
-                .renderImage() //
-                .writeToImage();
-
-        camera.setImageWriter(new ImageWriter("original2.6", 500, 500)) //
-                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
-                .moveZ(-10)
-                .rotateByRight(-10)
-                .rotateByUp(30)//
-                .renderImage() //
-                .writeToImage();
+//        camera.setImageWriter(new ImageWriter("original2.2", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
+//                .moveX(10)
+//                .moveY(20)//
+//                .renderImage() //
+//                .writeToImage();
+//
+//
+//        camera.setImageWriter(new ImageWriter("original2.3", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
+//                .moveZ(20)
+//                .rotateByRight(30)//
+//                .renderImage() //
+//                .writeToImage();
+//
+//        camera.setImageWriter(new ImageWriter("original2.4", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
+//                .moveZ(20)
+//                .rotateByRight(10)
+//                .moveY(20)//
+//                .renderImage() //
+//                .writeToImage();
+//
+//        camera.setImageWriter(new ImageWriter("original2.5", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
+//                .moveZ(20)
+//                .rotateByRight(-50)
+//                .moveY(-20)//
+//                .renderImage() //
+//                .writeToImage();
+//
+//        camera.setImageWriter(new ImageWriter("original2.6", 500, 500)) //
+//                .setRayTracer(new RayTracerAdvanced(scene).setDistance(100).setSampleSize(81))
+//                .moveZ(-10)
+//                .rotateByRight(-10)
+//                .rotateByUp(30)//
+//                .renderImage() //
+//                .writeToImage();
 
 
 

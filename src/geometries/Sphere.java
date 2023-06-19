@@ -23,6 +23,18 @@ public class Sphere extends RadialGeometry{
     {
         super(radius);
         this.center = point;
+
+        this.lowBound=new Point(
+                point.getX()-radius,
+                point.getY()-radius,
+                 point.getZ()-radius
+        );
+
+        this.highBound=new Point(
+                point.getX()+radius,
+                point.getY()+radius,
+                point.getZ()+radius
+        );
     }
 
     /**

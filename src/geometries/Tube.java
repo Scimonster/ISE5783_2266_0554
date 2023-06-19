@@ -21,6 +21,9 @@ public class Tube extends RadialGeometry {
     {
         super(radius);
         this.axisRay=ray;
+
+        this.lowBound=null;
+        this.highBound=null;
     }
 
     /**

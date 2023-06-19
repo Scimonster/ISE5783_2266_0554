@@ -27,6 +27,10 @@ public class Plane extends Geometry{
         Vector v1 = p1.subtract(p2);
         Vector v2 = p1.subtract(p3);
         this.normal = v1.crossProduct(v2).normalize();
+
+        this.lowBound=null;
+        this.highBound=null;
+
     }
 
     /**

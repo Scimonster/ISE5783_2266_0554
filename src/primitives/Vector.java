@@ -8,6 +8,11 @@ import java.util.List;
  */
 public class Vector extends Point {
 
+    public static final Vector X=new Vector(1,0,0);
+    public static final Vector Y=new Vector(0,1,0);
+    public static final Vector Z=new Vector(0,0,1);
+
+
     /**
      * Internal constructor for a triplet of doubles
      * @param point triplet of doubles
@@ -132,4 +137,7 @@ public class Vector extends Point {
         v2 = v0.crossProduct(v1);
         return List.of(v1, v2);
     }
+
+
+
 }

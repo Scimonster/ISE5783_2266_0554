@@ -79,6 +79,27 @@ public class Polygon extends Geometry {
          if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
             throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
       }
+
+      double xMin=Double.POSITIVE_INFINITY,
+              yMin=Double.POSITIVE_INFINITY,
+              zMin=Double.POSITIVE_INFINITY,
+              xMax=Double.NEGATIVE_INFINITY,
+              yMax=Double.NEGATIVE_INFINITY,
+              zMax=Double.NEGATIVE_INFINITY;
+
+      for(Point vertex:vertices)
+      {
+         xMin=Math.min(xMin,vertex.getX());
+         yMin=Math.min(yMin,vertex.getY());
+         zMin=Math.min(zMin,vertex.getZ());
+         xMax=Math.max(xMax,vertex.getX());
+         yMax=Math.max(yMax,vertex.getY());
+         zMax=Math.max(zMax,vertex.getZ());
+      }
+
+      this.lowBound=new Point(xMin,yMin,zMin);
+      this.highBound=new Point(xMax,yMax,zMax);
+
    }
 
    @Override
