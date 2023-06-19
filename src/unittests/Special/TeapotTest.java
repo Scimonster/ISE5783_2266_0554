@@ -4,12 +4,10 @@ import static java.awt.Color.YELLOW;
 
 import org.junit.jupiter.api.Test;
 
-import geometries.Triangle;
-import lighting.PointLight;
-import primitives.Color;
-import primitives.Material;
-import primitives.Point;
-import primitives.Vector;
+import geometries.*;
+import lighting.*;
+import primitives.*;
+
 import renderer.Camera;
 import renderer.ImageWriter;
 import renderer.RayTracerBasic;
@@ -21,7 +19,7 @@ import scene.Scene;
  * @author Dan
  */
 public class TeapotTest {
-    private final ImageWriter imageWriter = new ImageWriter("teapot", 800, 800);
+    private final ImageWriter imageWriter = new ImageWriter("teapot pic", 800, 800);
 
     private final Camera camera = new Camera(new Point(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
             .setVPDistance(1000).setVPSize(200, 200) //
@@ -570,7 +568,7 @@ public class TeapotTest {
      */
     @Test
     public void teapot() {
-        scene.geometries.add( //
+        Geometries teapot = new Geometries(
                 new Triangle(pnts[7], pnts[6], pnts[1]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[1], pnts[2], pnts[7]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[8], pnts[7], pnts[2]).setEmission(color).setMaterial(mat), //
@@ -1564,9 +1562,33 @@ public class TeapotTest {
                 new Triangle(pnts[470], pnts[469], pnts[529]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[529], pnts[530], pnts[470]).setEmission(color).setMaterial(mat) //
         );
-        scene.lights.add(new PointLight(new Color(500, 500, 500), new Point(100, 0, -100)).setKq(0.000001));
 
-        camera.setRayTracer(new RayTracerBasic(scene)).renderImage().printGrid(50, new Color(YELLOW));
+        // teapot bounding box: (-84, -40, -58) -> (98, 50, 56)
+
+        Geometry cup = new Cylinder(20, new Ray(new Point(0, -40, -200), Vector.Y), 60);
+        cup.setEmission(new Color(100, 100, 100)).setMaterial(new Material().setKt(0.7).setDiffusive(0.02));
+
+        Geometry stoveBottom = new Plane(new Point(0, -40, -200), Vector.Y);
+        stoveBottom.setEmission(new Color(80,90,85)).setMaterial(new Material().setKd(0.2).setKs(0.1).setKr(0.2).setGlossiness(0.2));
+
+        Geometry bg = new Plane(new Point(0, -40, 200), Vector.Z);
+        bg.setEmission(new Color(80,300,200)).setMaterial(new Material().setKd(0.2).setKs(0.1).setKr(0.03).setGlossiness(0.3));
+
+        Material bubbleMat = new Material().setShininess(8).setKt(0.6).setKs(0.2).setKd(0.1);
+        Color bubbleColor = new Color(250, 250, 250);
+        Geometries bubbles = new Geometries(
+                new Sphere(new Point(90, 35, 0), 3).setEmission(bubbleColor).setMaterial(bubbleMat),
+                new Sphere(new Point(75, 45, 10), 2.5).setEmission(bubbleColor).setMaterial(bubbleMat),
+                new Sphere(new Point(80, 50, -5), 3.1).setEmission(bubbleColor).setMaterial(bubbleMat)
+        );
+
+        scene.geometries.add(teapot, cup, stoveBottom, bg, bubbles);
+
+        scene.lights.add(new PointLight(new Color(500, 500, 500), new Point(100, 0, -100)).setKq(0.000001));
+        scene.lights.add(new DirectionalLight(new Color(500, 500, 500), new Vector(0, -100, -50)));
+        scene.lights.add(new SpotLight(new Color(260, 260, 2), new Point(-30, 75, -10), new Vector(5, -100, 50)).setNarrowBeam(4).setKl(0.00001));
+
+        camera.setRayTracer(new RayTracerBasic(scene)).renderImage();
         camera.writeToImage();
     }
 
