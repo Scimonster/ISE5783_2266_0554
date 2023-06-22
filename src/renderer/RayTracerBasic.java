@@ -13,7 +13,7 @@ import geometries.Intersectable.GeoPoint;
 public class RayTracerBasic extends RayTracerBase {
 
     protected static final double DELTA = 0.1;
-    protected static final int MAX_CALC_COLOR_LEVEL = 10;
+    protected static final int MAX_CALC_COLOR_LEVEL = 5;
     protected static final Double3 INITIAL_K = Double3.ONE;
     protected static final double MIN_CALC_COLOR_K = 0.001;
 

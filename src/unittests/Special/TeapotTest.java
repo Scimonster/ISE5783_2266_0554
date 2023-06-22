@@ -10,6 +10,7 @@ import primitives.*;
 
 import renderer.Camera;
 import renderer.ImageWriter;
+import renderer.RayTracerAdvanced;
 import renderer.RayTracerBasic;
 import scene.Scene;
 
@@ -19,7 +20,7 @@ import scene.Scene;
  * @author Dan
  */
 public class TeapotTest {
-    private final ImageWriter imageWriter = new ImageWriter("teapot pic", 800, 800);
+    private final ImageWriter imageWriter = new ImageWriter("teapot pic2", 500, 500);
 
     private final Camera camera = new Camera(new Point(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
             .setVPDistance(1000).setVPSize(200, 200) //
@@ -1588,7 +1589,7 @@ public class TeapotTest {
         scene.lights.add(new DirectionalLight(new Color(500, 500, 500), new Vector(0, -100, -50)));
         scene.lights.add(new SpotLight(new Color(260, 260, 2), new Point(-30, 75, -10), new Vector(5, -100, 50)).setNarrowBeam(4).setKl(0.00001));
 
-        camera.setRayTracer(new RayTracerBasic(scene)).renderImage();
+        camera.setRayTracer(new RayTracerAdvanced(scene).setDistance(1000).setSampleSize(10)).renderImage();
         camera.writeToImage();
     }
 

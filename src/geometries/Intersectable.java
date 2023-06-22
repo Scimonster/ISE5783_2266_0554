@@ -11,7 +11,10 @@ import java.util.stream.Collectors;
 
 public abstract class Intersectable {
 
+    //bottom left front corner of bounded box
     protected Point lowBound;
+
+    //top right back corner of box
     protected Point highBound;
 
     /**
@@ -94,7 +97,7 @@ public abstract class Intersectable {
 
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance)
     {
-            if(this.intersectBoundedBox(ray)) {
+            if(true||this.intersectBoundedBox(ray)) {
 
                 //check that there is a possibility of an intersection
                 return this.findGeoIntersectionsHelper(ray, maxDistance);
@@ -143,14 +146,8 @@ public abstract class Intersectable {
         double tFar=Math.min(tMaxX,Math.min(tMaxY,tMaxZ));
 
         //if tNear is greater the tFar, missed box
-        if(Util.alignZero(tNear-tFar)>0)
-        {
+        if(Util.alignZero(tNear-tFar)>0||Util.alignZero(tFar)<0) {
             return false;
-
-        //if tFar is less than 0, the box is behind the ray, and we missed it
-        } else if (Util.alignZero(tFar)<0) {
-            return false;
-
         }
 
         return true;
