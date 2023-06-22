@@ -124,12 +124,12 @@ public abstract class Intersectable {
             return true;
         }
         //calculate the distance on the ray to each bounded axis plane
-        double  t1x = calcT(ray, Vector.X, lowBound),
-                t1y = calcT(ray, Vector.Y, lowBound),
-                t1z = calcT(ray, Vector.Z, lowBound),
-                t2x = calcT(ray, Vector.X, highBound),
-                t2y = calcT(ray, Vector.Y, highBound),
-                t2z = calcT(ray, Vector.Z, highBound);
+        double  t1x = (lowBound.getX() - ray.getP0().getX()) / ray.getDir().getX(),
+                t1y = (lowBound.getY() - ray.getP0().getY()) / ray.getDir().getY(),
+                t1z = (lowBound.getZ() - ray.getP0().getZ()) / ray.getDir().getZ(),
+                t2x = (highBound.getX() - ray.getP0().getX()) / ray.getDir().getX(),
+                t2y = (highBound.getY() - ray.getP0().getY()) / ray.getDir().getY(),
+                t2z = (highBound.getZ() - ray.getP0().getZ()) / ray.getDir().getZ();
 
         double  tMaxX = Math.max(t1x, t2x),
                 tMaxY = Math.max(t1y, t2y),
