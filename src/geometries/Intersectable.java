@@ -97,7 +97,7 @@ public abstract class Intersectable {
 
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance)
     {
-            if(true||this.intersectBoundedBox(ray)) {
+            if(this.intersectBoundedBox(ray)) {
 
                 //check that there is a possibility of an intersection
                 return this.findGeoIntersectionsHelper(ray, maxDistance);
@@ -115,10 +115,8 @@ public abstract class Intersectable {
      * @return
      */
 
-
     private boolean intersectBoundedBox(Ray ray)
     {
-
 
 
         //if there is no bounded box possibility, no early exit option
@@ -154,30 +152,6 @@ public abstract class Intersectable {
 
 
     }
-
-    /**
-     * function to calculate the T distance of a ray to a "plane" for bounded box
-     * @param inRay
-     * @param normal
-     * @param bound
-     * @return
-     */
-    private double calcT(Ray inRay, Vector normal, Point bound)
-    {
-        double nDotV = normal.dotProduct(inRay.getDir());
-
-        //if the ndotV is 0, it means we are parallel
-        if(Util.isZero(nDotV))
-        {
-            return Double.NaN;
-        }
-
-        //return the calculation of T
-        return Util.alignZero(normal.dotProduct(bound.subtract(inRay.getP0())) / nDotV);
-
-    }
-
-
 
 
 }
